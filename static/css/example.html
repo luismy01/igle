@@ -1,0 +1,59 @@
+
+<!doctype html>
+
+<html lang="es_ES">
+
+	<head>
+		
+		<meta charset="utf-8" />
+
+		<title>Igle - SI Ekleci&aacute;stico</title>
+		<link rel="stylesheet" href="dropdown-menu.css" type="text/css" media="screen" charset="utf-8" />
+
+		<script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+		<script type="text/javascript">
+
+    		$(document).ready(function(){  
+
+        		$("#navigation li").hover(function() { 
+		            $(this).find("ul.subnav").slideDown('fast').show();
+	            }, function(){
+                	$(this).parent().find("ul.subnav").slideUp('fast');
+        		});  
+      
+			});  
+
+		</script>
+	
+
+	</head>
+
+	<body>
+
+		<header>
+
+			<h1 id="head">Administraci&oacute;n de Igle Software</h1>
+
+			<ul id="navigation">
+				<li><span class="active">Inicio</span></li>
+				<li><a href="/tesoreria/">Tesorer&iacute;a</a>
+					<ul class="subnav">  
+			            <li><a href="#">Sub Nav Link</a></li>  
+			            <li><a href="#">Sub Nav Link</a></li>  
+			        </ul>  
+				</li>
+				<li><a href="#/secretaria/">Secretar&iacute;a</a></li>
+			</ul>
+			
+		</header>
+		
+		<div id="content" class="container_16 clearfix">
+			
+		</div>
+
+			<div id="foot">
+				<i>Designed by </i><a href="http://mathew-davies.co.uk/">Mathew Davies</a>
+			</div>
+		
+	</body>
+</html>
