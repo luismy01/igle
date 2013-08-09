@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <title>Iglesoft | asistencia</title>
+
+    <!-- mobile first -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap -->
+    <link href="http://twbs.github.io/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="http://twbs.github.io/bootstrap-glyphicons/css/bootstrap-glyphicons.css" rel="stylesheet" media="screen">
+
+  </head>
+
+  <body>
+    
+	<div class="navbar">
+	  <a class="navbar-brand" href="#">Veinte de Julio</a>
+	  <ul class="nav navbar-nav">
+	    <li class="active"><a href="#">Asistencia</a></li>
+	    <li class="disabled"><a href="#">Link</a></li>
+	    <li class="disabled"><a href="#">Link</a></li>
+	  </ul>
+	</div>
+
+    
+    <div class="container">
+
+    	<div class="row">
+    		
+    		<div class="col-2">
+    		</div>
+    		
+    		<div class="col-10">
+
+    			<div class="panel">
+				  <div class="btn-group">
+					  <button type="button" class="btn btn-default" id="add">Agregar</button>
+					  <button type="button" class="btn btn-default" id="refresh">Actualizar</button>
+					</div>
+				</div>
+
+				<div class="panel">
+				  <div id="lineChart"></div>
+				</div>
+
+			<!-- Modal -->
+			  <div class="modal fade" id="FrmNewAsistencia">
+			    <div class="modal-dialog">
+			      <div class="modal-content">
+			        <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			          <h4 class="modal-title">Asistencia</h4>
+			        </div>
+			        <div class="modal-body">
+			        	
+
+	    				<form class="form-horizontal">
+						  <fieldset>
+						    
+						    <div class="form-group">
+						      <label class="col-2 control-label" for="txt-fecha">Fecha</label>
+						      <div class="col-10">
+						      		<input type="date" class="form-control input-sm" id="txt-fecha" placeholder="Enter email">
+						      </div>
+						    </div>
+						    <div class="form-group">
+						      <label class="col-2 control-label" for="txt-hermanos">Hermanos</label>
+						      <div class="col-10">
+						      	<input type="number" class="form-control input-sm" id="txt-hermanos" placeholder="Numero de Hermanos">
+						      </div>
+						    </div>
+						    <div class="form-group">
+						      <label class="col-2 control-label" for="txt-visitas">Visitas</label>
+						      <div class="col-10">
+						      	<input type="number" class="form-control input-sm" id="txt-visitas" placeholder="Numero de Visitas">
+						      </div>
+						    </div>
+						    <div class="form-group">
+						      <label class="col-2 control-label" for="txt-ninos">Ni&ntilde;os</label>
+						      <div class="col-10">
+						      	<input type="number" class="form-control input-sm" id="txt-ninos" placeholder="Numero de Ni&ntilde;os">
+						      </div>
+						    </div>
+						    <div class="form-group">
+						      <label class="col-2 control-label" for="txt-adolescentes">Adolescentes</label>
+						      <div class="col-10">
+						      	<input type="number" class="form-control input-sm" id="txt-adolescentes" placeholder="Numero de Adolescentes">
+						      </div>
+						    </div>
+
+						  </fieldset>
+						</form>
+
+
+			        </div>
+			        
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-primary" id="save">Save changes</button>
+			          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        </div>
+
+			      </div><!-- /.modal-content -->
+			    </div><!-- /.modal-dialog -->
+			  </div><!-- /.modal -->
+
+    		</div>
+
+    	</div>
+
+    </div>
+    
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="http://twbs.github.io/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://jashkenas.github.io/underscore/underscore-min.js"></script>
+	<script src="http://jashkenas.github.io/backbone/backbone-min.js"></script>
+	<script src="https://rawgithub.com/moment/moment/2.1.0/min/moment.min.js"></script>
+	<script src="https://rawgithub.com/moment/moment/2.1.0/min/langs.min.js"></script>
+	<script src="https://rawgithub.com/timrwood/moment-timezone/0.0.1/min/moment-timezone.min.js"></script>
+
+    <script src="{{MEDIA_URL}}js/chart.js"></script>
+    <script src="{{MEDIA_URL}}js/models.asistencia.js"></script>
+    <script src="{{MEDIA_URL}}js/asistencia.js"></script>
+  
+  </body>
+
+</html>

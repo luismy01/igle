@@ -8,9 +8,26 @@ class asistencia(models.Model):
 	hermanos = models.IntegerField()
 	visitas = models.IntegerField()
 	ninos = models.IntegerField()
+	adolescentes = models.IntegerField()
+	ofrenda = models.IntegerField()
+	observaciones = models.CharField(max_length=250)
 
 	def __unicode__(self):
 		return self.fecha
+
+	def dict(self):
+		
+		obj = {
+			"fecha": str(self.fecha),
+			"hermanos": self.hermanos,
+			"visitas": self.visitas,
+			"ninos": self.ninos,
+			"adolescentes": self.adolescentes,
+			"ofrenda": self.ofrenda,
+			"observaciones": self.observaciones
+		}
+
+		return obj
 
 	class Meta:
 		db_table = "asistencia"
