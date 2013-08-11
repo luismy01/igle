@@ -15,6 +15,17 @@
 
   <body>
     
+  	<script type="text/template" id="tpl-asist-list-item">
+		<td><%= fecha %></td>
+		<td><%= hermanos %></td>
+		<td><%= ninos %></td>
+		<td><%= adolescentes %></td>
+		<td><%= visitas %></td>
+		<td><%= ofrenda %></td>
+		<td><%= observaciones %></td>
+		<td><a class="disabled" href='#edit/<%= fecha %>'>editar</a> | <a class="delete" href='#borrar/<%= fecha %>'>borrar</a> </td>
+	</script>
+
 	<div class="navbar">
 	  <a class="navbar-brand" href="#">Veinte de Julio</a>
 	  <ul class="nav navbar-nav">
@@ -35,14 +46,58 @@
     		<div class="col-10">
 
     			<div class="panel">
-				  <div class="btn-group">
-					  <button type="button" class="btn btn-default" id="add">Agregar</button>
-					  <button type="button" class="btn btn-default" id="refresh">Actualizar</button>
+					<div class="btn-group">
+				  		<button type="button" class="btn btn-default" id="add">Agregar</button>
+				  		<button type="button" class="btn btn-default" id="refresh">Actualizar</button>
 					</div>
+
+					<ul class="nav nav-pills pull-right" id="tabs">
+						<li class="active"><a href="#tb-grafico">Gr&aacute;fico</a></li>
+						<li class=""><a href="#tb-lista">Lista</a></li>
+					</ul>
+
 				</div>
 
 				<div class="panel">
-				  <div id="lineChart"></div>
+
+					<div class="tab-content">
+						
+						<div class="tab-pane active" id="tb-grafico">
+							<div id="lineChart"></div>
+						</div>
+
+						<div class="tab-pane" id="tb-lista">
+							
+							<table class="table table-condensed" id="tabla">
+								<thead>
+									<tr>
+										<th>Fecha</th>
+										<th>Hermanos</th>
+										<th>Ni&ntilde;os</th>
+										<th>Adolescentes</th>
+										<th>Visitas</th>
+										<th>Ofrenda</th>
+										<th>Observaciones</th>
+										<th>Acciones</th>
+									</tr>
+								</thead>
+								<tbody id="tabla-body">
+									<tr>
+										<td>aa</td>
+										<td>bb</td>
+										<td>cc</td>
+										<td>dd</td>
+										<td>ee</td>
+										<td>ff</td>
+										<td>gg</td>
+									</tr>
+								</tbody>
+								
+							</table>
+
+						</div>
+
+					</div>
 				</div>
 
 			<!-- Modal -->
@@ -56,39 +111,68 @@
 			        <div class="modal-body">
 			        	
 
-	    				<form class="form-horizontal">
+	    				<form id="form-asist">
 						  <fieldset>
 						    
-						    <div class="form-group">
-						      <label class="col-2 control-label" for="txt-fecha">Fecha</label>
-						      <div class="col-10">
-						      		<input type="date" class="form-control input-sm" id="txt-fecha" placeholder="Enter email">
-						      </div>
+						    <div class="row">
+
+						    	<div class="col-6">
+								    <div class="form-group">
+								      <label for="txt-fecha">Fecha</label>
+								      <input type="date" class="form-control" id="txt-fecha" placeholder="Enter email">
+								    </div>
+							    </div>
+
+							    <div class="col-6">
+								    <div class="form-group">
+									<label for="txt-obs">Ofrenda</label>
+								    <div class="input-group">
+									  <span class="input-group-addon">$</span>
+									  <input type="text" class="form-control" id="txt-ofrenda">
+									  <span class="input-group-addon">.00</span>
+									</div> 
+								    </div>
+							    </div>
+
+							    
+							</div>
+
+							<div class="row">
+
+								<div class="col-6">
+								    <div class="form-group">
+								      <label for="txt-hermanos">Hermanos</label>
+								      <input type="number" class="form-control" id="txt-hermanos" placeholder="Numero de Hermanos">
+								    </div>
+								    <div class="form-group">
+								      <label for="txt-visitas">Visitas</label>
+								      	<input type="number" class="form-control" id="txt-visitas" placeholder="Numero de Visitas">
+								    </div>
+							    </div>
+
+								<div class="col-6">
+								    <div class="form-group">
+								      <label for="txt-ninos">Ni&ntilde;os</label>
+								      <input type="number" class="form-control" id="txt-ninos" placeholder="Numero de Ni&ntilde;os">
+								    </div>
+								    <div class="form-group">
+								      <label for="txt-adolescentes">Adolescentes</label>
+								      <input type="number" class="form-control" id="txt-adolescentes" placeholder="Numero de Adolescentes">
+								    </div>
+							    </div>
+
 						    </div>
-						    <div class="form-group">
-						      <label class="col-2 control-label" for="txt-hermanos">Hermanos</label>
-						      <div class="col-10">
-						      	<input type="number" class="form-control input-sm" id="txt-hermanos" placeholder="Numero de Hermanos">
-						      </div>
-						    </div>
-						    <div class="form-group">
-						      <label class="col-2 control-label" for="txt-visitas">Visitas</label>
-						      <div class="col-10">
-						      	<input type="number" class="form-control input-sm" id="txt-visitas" placeholder="Numero de Visitas">
-						      </div>
-						    </div>
-						    <div class="form-group">
-						      <label class="col-2 control-label" for="txt-ninos">Ni&ntilde;os</label>
-						      <div class="col-10">
-						      	<input type="number" class="form-control input-sm" id="txt-ninos" placeholder="Numero de Ni&ntilde;os">
-						      </div>
-						    </div>
-						    <div class="form-group">
-						      <label class="col-2 control-label" for="txt-adolescentes">Adolescentes</label>
-						      <div class="col-10">
-						      	<input type="number" class="form-control input-sm" id="txt-adolescentes" placeholder="Numero de Adolescentes">
-						      </div>
-						    </div>
+
+						   	 <div class="row">
+
+							    <div class="col-12">
+								    <div class="form-group">
+								      <label for="txt-obs">Observaciones</label>
+								      <textarea class="form-control" rows="2" id="txt-obs" placeholder="¿Que sucedió?"></textarea>
+								    </div>
+							    </div>
+
+							</div>
 
 						  </fieldset>
 						</form>
@@ -97,8 +181,8 @@
 			        </div>
 			        
 			        <div class="modal-footer">
-			          <button type="button" class="btn btn-primary" id="save">Save changes</button>
-			          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			          <button type="button" class="btn btn-primary" id="save">Guardar</button>
+			          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 			        </div>
 
 			      </div><!-- /.modal-content -->

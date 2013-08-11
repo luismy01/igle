@@ -4,7 +4,8 @@ from django.db import models
 
 class asistencia(models.Model):
 	
-	fecha = models.DateField(primary_key=True)
+	id = models.AutoField(primary_key=True)
+	fecha = models.DateField(unique=True)
 	hermanos = models.IntegerField()
 	visitas = models.IntegerField()
 	ninos = models.IntegerField()
@@ -18,6 +19,7 @@ class asistencia(models.Model):
 	def dict(self):
 		
 		obj = {
+			"id": self.id,
 			"fecha": str(self.fecha),
 			"hermanos": self.hermanos,
 			"visitas": self.visitas,
