@@ -226,13 +226,11 @@ $(function () {
 	    },
 
 	    newAsistencia:function (event) {
-	        app.navigate("!");
 	        app.navigate("new", true);
 	        return false;
 	    },
 
 	    listAsistencia: function(event) {
-	    	app.navigate("!");
 	    	app.navigate("list", true);
 	        return false;	
 	    }
@@ -241,11 +239,10 @@ $(function () {
 
 	window.AppRouter = Backbone.Router.extend({
 
-	    routes:{
+	    routes: {
 	        "":"list",
 	        "list":"list",
-	        "new":"newAsistencia",
-	        ":id":"wineDetails"
+	        "new":"newAsistencia"
 	    },
 
 	    initialize: function () {
@@ -268,22 +265,13 @@ $(function () {
 	        });
 	    },
 
-	    wineDetails: function (id) {
-	        if (this.wineList) {
-	            this.wine = this.wineList.get(id);
-	            if (this.asistenciaView) this.asistenciaView.close();
-	            this.asistenciaView = new AsistenciaView({model:this.wine});
-	            $('#content').html(this.asistenciaView.render().el);
-	        } else {
-	            this.requestedId = id;
-	            this.list();
-	        }
-	    },
-
 	    newAsistencia: function () {
 	        if (app.asistenciaView) app.asistenciaView.close();
 	        app.asistenciaView = new AsistenciaView({model:new Asistencia()});
 	        $("#FrmNewAsistencia").modal("show");
+	        $("#FrmNewAsistencia").on("hide.bs.modal", function() {
+	        	app.navigate("#");
+	        });
 	    }
 
 	});
