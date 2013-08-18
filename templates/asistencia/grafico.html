@@ -7,9 +7,11 @@
     <!-- mobile first -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Bootstrap -->
-    <link href="http://twbs.github.io/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="http://twbs.github.io/bootstrap-glyphicons/css/bootstrap-glyphicons.css" rel="stylesheet" media="screen">
+    <!-- Bootstrap minified CSS -->
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Latest Glyphicons minified CSS -->
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css" rel="stylesheet">
 
   </head>
 
@@ -23,25 +25,37 @@
 		<td><%= visitas %></td>
 		<td><%= ofrenda %></td>
 		<td><%= observaciones %></td>
-		<td><a class="disabled" href='#edit/<%= fecha %>'>editar</a> | <a class="delete" href='#borrar/<%= fecha %>'>borrar</a> </td>
+		<td>
+			<div class="btn-toolbar">
+				<div class="btn-group">
+					<a class="btn btn-default btn-xs" href='#edit/<%= fecha %>'>editar</a>
+				</div>
+				<div class="btn-group">
+					<a class="btn btn-danger btn-xs" href='#delete/<%= fecha %>'>borrar</a>
+				</div>
+			</div>
+		</td>
+	</script>
+
+	<script type="text/template" id="tpl-delete-asist">
+		¿Esta seguro de borrar la asistencia correspondiente al d&iacute;a <%= fecha %>?
 	</script>
 
 	<div class="navbar">
-	  <a class="navbar-brand" href="#">Veinte de Julio</a>
-	  <ul class="nav navbar-nav">
-	    <li class="active"><a href="#">Asistencia</a></li>
-	    <li class="disabled"><a href="#">Link</a></li>
-	    <li class="disabled"><a href="#">Link</a></li>
-	  </ul>
+		
+		<a class="navbar-brand" href="#">Veinte de Julio</a>
+		
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="#">Asistencia</a></li>
+	  	</ul>
+
 	</div>
 
-    
     <div class="container">
 
     	<div class="row">
     		
-    		<div class="col-md-2">
-    		</div>
+    		<div class="col-md-2"></div>
     		
     		<div class="col-md-10">
 
@@ -72,7 +86,7 @@
 
 						<div class="tab-pane" id="tb-lista">
 							
-							<table class="table table-striped table-hover" id="tabla">
+							<table class="table table-condensed table-hover" id="tabla">
 								<thead>
 									<tr>
 										<th>Fecha</th>
@@ -87,13 +101,14 @@
 								</thead>
 								<tbody id="tabla-body">
 									<tr>
-										<td>aa</td>
-										<td>bb</td>
-										<td>cc</td>
-										<td>dd</td>
-										<td>ee</td>
-										<td>ff</td>
-										<td>gg</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
 									</tr>
 								</tbody>
 								
@@ -105,16 +120,17 @@
 				</div>
 
 			<!-- Modal -->
-			  <div class="modal fade" id="FrmNewAsistencia">
+			<div class="modal fade" id="FrmNewAsistencia">
 			    <div class="modal-dialog">
 			      <div class="modal-content">
 			        <div class="modal-header">
 			          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			          <h4 class="modal-title">Asistencia</h4>
 			        </div>
+
+
 			        <div class="modal-body">
 			        	
-
 	    				<form id="form-asist">
 						  <fieldset>
 						    
@@ -138,7 +154,6 @@
 								    </div>
 							    </div>
 
-							    
 							</div>
 
 							<div class="row">
@@ -193,7 +208,26 @@
 			    </div><!-- /.modal-dialog -->
 			  </div><!-- /.modal -->
 
-    		</div>
+
+			<!-- Modal Delete -->
+			<div class="modal fade" id="AsistenciaDeleteView">
+			    <div class="modal-dialog">
+			      <div class="modal-content">
+			        <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			          <h4 class="modal-title">Borrar la Asistencia</h4>
+			        </div>
+
+			        <div class="modal-body"></div>
+			        
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-danger" id="btn-delete">Borrar</button>
+			          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+			        </div>
+
+			      </div><!-- /.modal-content -->
+			    </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
 
     	</div>
 
@@ -201,7 +235,7 @@
     
 
     <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="http://twbs.github.io/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/js/bootstrap.min.js"></script>
 	<script src="http://code.highcharts.com/highcharts.js"></script>
 	<script src="http://jashkenas.github.io/underscore/underscore-min.js"></script>
 	<script src="http://jashkenas.github.io/backbone/backbone-min.js"></script>

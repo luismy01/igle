@@ -70,6 +70,11 @@ def manageID(request, id):
 
 	if request.is_ajax():
 		
+		# update one asistencia
+		if request.method in ("PUT", "POST"):
+
+			return save(request)
+
 		# delete one asistencia
 		if request.method == "DELETE":
 
@@ -93,6 +98,9 @@ def save(request):
 		data = simplejson.loads(key)
 		break
 
+	if "id" in data.keys():
+		model.id = data["id"]
+
 	model.fecha = data["fecha"]
 	model.hermanos = data["hermanos"]
 	model.visitas = data["visitas"]
@@ -100,9 +108,9 @@ def save(request):
 	model.adolescentes = data["adolescentes"]
 	model.ofrenda = data["ofrenda"]
 	model.observaciones = data["observaciones"]	
-
+	
 	model.save();
-
+	
 	return HttpResponse(simplejson.dumps(model.dict()), mimetype='application/json')
 
 def delete(request, fecha):

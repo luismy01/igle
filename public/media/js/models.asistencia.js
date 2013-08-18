@@ -105,7 +105,8 @@ $(function () {
 	    template: _.template($('#tpl-asist-list-item').html()),
 
 	    events: {
-	    	"click .delete": "deleteAsistencia"
+	    	"click .btn-edit": "edit",
+	    	"click .btn-delete": "delete"
 	    },
 
 	    initialize: function () {
@@ -118,20 +119,19 @@ $(function () {
 	        return this;
 	    },
 
-	    deleteAsistencia: function () {
+	    delete: function () {
 	        var self = this
-
-			console.log("model is new? " + this.model.isNew());
 
 	        this.model.destroy({
 	            success: function () {
-	            	app.asistList.remove(self.model)
+	            	app.asistencias.remove(self.model)
 	            	console.log("model deleted")
 	            },
 
 	            error: function() {
 	            	alert('Error Borrar');
 	            }
+
 	        }, {wait: true});
 	        return false;
 	    },
@@ -153,6 +153,11 @@ $(function () {
 
 	    initialize: function () {
 	        this.model.on("change", this.render, this);
+
+	        this.$el.on("hide.bs.modal", function() {
+				app.navigate("#");
+			});
+
 	    },
 
 	    render: function () {
@@ -160,20 +165,36 @@ $(function () {
 	    },
 
 	    events:{
-	        "change input":"change",
-	        "click #save":"saveAsistencia",
+	    	"click #save": "save",
 	    },
 
-	    change: function (event) {
-	        var target = event.target;
-	        console.log('changing ' + target.id + ' from: ' + target.defaultValue + ' to: ' + target.value);
-	        // You could change your model on the spot, like this:
-	        // var change = {};
-	        // change[target.name] = target.value;
-	        // this.model.set(change);
+	    add: function() {
+
+			$("#txt-fecha").val("");
+			$("#txt-hermanos").val("");
+			$("#txt-visitas").val("");
+			$("#txt-ninos").val("");
+			$("#txt-adolescentes").val("");
+			$("#txt-ofrenda").val("");
+			$("#txt-obs").val("");
+
+	    	this.$el.modal("show");
 	    },
 
-	    saveAsistencia: function () {
+	    edit: function() {
+
+			$("#txt-fecha").val(this.model.get("fecha"));
+			$("#txt-hermanos").val(this.model.get("hermanos"));
+			$("#txt-visitas").val(this.model.get("visitas"));
+			$("#txt-ninos").val(this.model.get("ninos"));
+			$("#txt-adolescentes").val(this.model.get("adolescentes"));
+			$("#txt-ofrenda").val(this.model.get("ofrenda"));
+			$("#txt-obs").val(this.model.get("observaciones"));
+
+	    	this.$el.modal("show");
+	    },
+
+	    save: function () {
 	        
 	        this.model.set({
 				fecha: $("#txt-fecha").val(),
@@ -187,23 +208,78 @@ $(function () {
 
 	        if (this.model.isNew()) {
 	            var self = this;
-	            app.asistList.create(this.model, {
+	            app.asistencias.create(this.model, {
 	                success: function () {
-	                    console.log("new model added");
-	                    $("#FrmNewAsistencia").modal("hide");
-	                    $("#form-asist").reset();
+	                    self.close();
 	                }
 	            });
 	        } else {
-	            this.model.save();
+	        	var self = this;
+	            this.model.save({},{
+	            	success: function() {
+	            		self.close();
+	            	}
+	            });
 	        }
 
 	        return false;
 	    },
 
 	    close: function () {
-	        $(this.el).off();
-	        $("#FrmNewAsistencia").modal('hide');
+	        this.$el.off();
+	        this.$el.modal('hide');
+	    }
+	});
+
+	window.AsistenciaDeleteView = Backbone.View.extend({
+
+		el: $("#AsistenciaDeleteView"),
+
+		template: _.template($('#tpl-delete-asist').html()),
+
+		defaults: {
+			model: new Backbone.Model()
+		},
+
+	    initialize: function () {
+	        this.model.on("change", this.render, this);
+
+	        this.$el.on("hide.bs.modal", function() {
+				app.navigate("#");
+			});
+
+	    },
+
+	    render: function () {
+	    	$(".modal-body", this.el).html(this.template(this.model.toJSON()));
+	    	$("#AsistenciaDeleteView").modal('show');
+	        return this;
+	    },
+
+	    events:{
+	    	"click #btn-delete":"delete",
+	    },
+
+	    delete: function() {
+
+	    	var self = this;
+	        this.model.destroy({
+	            success: function () {
+	            	app.asistencias.remove(self.model);
+	            	self.close();
+	            },
+
+	            error: function() {
+	            	alert('Error Borrar');
+	            }
+
+	        }, {wait: true});
+
+	    },
+
+	    close: function () {
+	        this.$el.off();
+	        this.$el.modal('hide');
 	    }
 	});
 
@@ -226,12 +302,12 @@ $(function () {
 	    },
 
 	    newAsistencia:function (event) {
-	        app.navigate("new", true);
+	        app.navigate("add", true);
 	        return false;
 	    },
 
 	    listAsistencia: function(event) {
-	    	app.navigate("list", true);
+	    	app.navigate("refresh", true);
 	        return false;	
 	    }
 
@@ -240,43 +316,98 @@ $(function () {
 	window.AppRouter = Backbone.Router.extend({
 
 	    routes: {
-	        "":"list",
-	        "list":"list",
-	        "new":"newAsistencia"
+	        "":"refresh",
+	        "list":"refresh",
+	        "refresh":"refresh",
+	        "new":"addAsistencia",
+	        "add":"addAsistencia",
+	        "edit/:date": "editAsistencia",
+	        "delete/:date": "deleteAsistencia"
 	    },
 
 	    initialize: function () {
 	        var toolbarView = new ToolBarView();
-	        this.asistList = new AsistenciaCollection()
+	        this.asistencias = new AsistenciaCollection()
 	    },
 
-	    list: function () {
-	        this.asistList = new AsistenciaCollection();
+	    refresh: function (evt) {
+	        this.asistencias = new AsistenciaCollection();
 	        var self = this;
-	        this.asistList.fetch({
+	        this.asistencias.fetch({
 	            success: function () {
-	                self.listView = new AsistenciaListView({collection:self.asistList});
+	                self.listView = new AsistenciaListView({collection:self.asistencias});
 	                self.listView.render()
 	                
-					self.chartView = new ChartView({collection:self.asistList});
+					self.chartView = new ChartView({collection:self.asistencias});
 	                self.chartView.render();
 
+	                if (evt) {
+
+	                	if (evt.edit) self.editAsistencia(evt.fecha);
+	                	else if (evt.delete) self.deleteAsistencia(evt.fecha);
+
+	                }
+
+	                self.navigate("");
 	            }
 	        });
 	    },
 
-	    newAsistencia: function () {
+	    addAsistencia: function () {
 	        if (app.asistenciaView) app.asistenciaView.close();
 	        app.asistenciaView = new AsistenciaView({model:new Asistencia()});
-	        $("#FrmNewAsistencia").modal("show");
-	        $("#FrmNewAsistencia").on("hide.bs.modal", function() {
-	        	app.navigate("#");
-	        });
+	        app.asistenciaView.add();
+	    },
+
+	    editAsistencia: function (fecha) {
+	    	
+	    	if (this.asistencias.length == 0) {
+		    	this.refresh({fecha: fecha, edit:true});
+		    }
+
+	    	_.each(this.asistencias.models, function (asist) {
+	            
+	    		if (asist.get("fecha") == fecha) {
+
+					if (app.asistenciaView) app.asistenciaView.close();
+				    app.asistenciaView = new AsistenciaView({model:asist});
+				    app.asistenciaView.edit();
+				    return;
+	    		}
+
+	        }, this);
+
+		},
+
+	    deleteAsistencia: function (fecha) {
+
+	    	if (this.asistencias.length == 0) {
+		    	this.refresh({fecha: fecha, delete:true});
+		    }
+
+	    	_.each(this.asistencias.models, function (asist) {
+	            
+	    		if (asist.get("fecha") == fecha) {
+					if (app.asistenciaDeleteView) app.asistenciaDeleteView.close();
+				    app.asistenciaDeleteView = new AsistenciaDeleteView({model:asist});
+				    app.asistenciaDeleteView.render();
+				    return;
+	    		}
+
+	        }, this);
+
 	    }
 
 	});
 
 	window.app = new AppRouter();
 	Backbone.history.start();
+
+	var oldFunction = Backbone.sync;
+	Backbone.sync = function (method, model, options) {
+		if (method == "update") method = "create";
+		return oldFunction(method, model, options);
+	};
+
 
 });
