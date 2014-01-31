@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <title>Iglesoft | asistencia</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+
+	{% block head %}{% endblock %}
+
+  </head>
+
+  <body>
+
+	<header>
+
+		<nav class="navbar navbar-default" role="navigation">
+						
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Veinte de Julio</a>
+			</div>
+
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+
+				<ul class="nav navbar-nav">
+					<li><a href="/">Inicio</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Asistencia <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li class="menu-item"><a href="{% url agregar_asistencia %}">Agregar</a></li>
+							<li class="menu-item"><a href="{% url grafico_asistencia %}">Gráfico</a></li>
+						</ul>
+					</li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+
+					{% if user.username = "" %}
+					<li>
+						<a href="/entrar">Entrar</a>
+					</li>
+					{% endif %}
+					
+					{% if user.username != "" %}
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }} <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Cambia la contraseña</a></li>
+							<li class="divider"></li>
+							<li><a href="{% url salir %}">Salir</a></li>
+						</ul>
+					</li>
+					{% endif %}
+
+				</ul>
+
+			</div><!-- /.navbar-collapse -->
+		</nav>
+
+	</header>
+
+	<section class="container">
+		
+		{% block container %}{% endblock %}
+
+	<section>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://jashkenas.github.io/underscore/underscore-min.js"></script>
+	<script src="http://jashkenas.github.io/backbone/backbone-min.js"></script>
+	<script src="https://rawgithub.com/moment/moment/2.1.0/min/moment.min.js"></script>
+	<script src="https://rawgithub.com/moment/moment/2.1.0/min/langs.min.js"></script>
+	<script src="https://rawgithub.com/timrwood/moment-timezone/0.0.1/min/moment-timezone.min.js"></script>
+
+    <script src="{{MEDIA_URL}}js/chart.js"></script>
+    <script src="{{MEDIA_URL}}js/models.asistencia.js"></script>
+    <script src="{{MEDIA_URL}}js/asistencia.js"></script>
+  	
+	{% block scriptlast %}{% endblock %}
+
+  </body>
+
+</html>

@@ -2,12 +2,17 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
+from igle.views import home
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
-	url(r'^$', include('asistencia.urls')),
+	url(r'^$', home),
 	url(r'^asistencia/', include('asistencia.urls')),
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^entrar', 'igle.views.entrar', name='entrar'),
+    url(r'^salir', 'igle.views.salir', name='salir'),
 )
 
 if settings.DEBUG:

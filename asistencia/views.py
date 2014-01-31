@@ -1,6 +1,6 @@
-
+	
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.core import serializers
 from django.core.urlresolvers import reverse
@@ -8,11 +8,36 @@ from django.utils import simplejson
 
 from asistencia.models import asistencia
 
-def redirect(urlname):
-	return HttpResponseRedirect(reverse(urlname))
-
 def render(request, template):
-	return render_to_response(template, context_instance=RequestContext(request))
+	return render_to_response(template, {}, context_instance=RequestContext(request))
+
+def agregar(request):
+
+	if request.method == "POST":
+		
+		model = asistencia()
+		data = request.POST
+
+		model.fecha = data["fecha"]
+		model.hermanos = data["hermanos"]
+		model.visitas = data["visitas"]
+		model.ninos = data["ninos"]
+		model.adolescentes = data["adolescentes"]
+		model.ofrenda = data["ofrenda"]
+		model.observaciones = data["observaciones"]	
+	
+		model.save();
+	
+		return redirect("/asistencia")
+	
+	return render(request, "asistencia/agregar.html")
+
+def editar(request):
+	
+	if request.method == "POST":
+		return redirect("/asistencia")
+
+	return redirect("/asistencia")
 
 def home(request):
 	
@@ -88,30 +113,6 @@ def manageID(request, id):
 		
 		return render(request, "asistencia/grafico.html")
 
-
-
-def save(request):
-	
-	model = asistencia()
-
-	for key in request.POST:
-		data = simplejson.loads(key)
-		break
-
-	if "id" in data.keys():
-		model.id = data["id"]
-
-	model.fecha = data["fecha"]
-	model.hermanos = data["hermanos"]
-	model.visitas = data["visitas"]
-	model.ninos = data["ninos"]
-	model.adolescentes = data["adolescentes"]
-	model.ofrenda = data["ofrenda"]
-	model.observaciones = data["observaciones"]	
-	
-	model.save();
-	
-	return HttpResponse(simplejson.dumps(model.dict()), mimetype='application/json')
 
 def delete(request, fecha):
 	

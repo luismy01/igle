@@ -23,8 +23,8 @@ $(function () {
                 enabled: true,
                 useHTML: true,
                 formatter: function() {
-                    var txt = '<div class="containerfluid">' +
-                        '<div class="row-fluid">' +
+                    var txt = '<div class="container">' +
+                        '<div class="row">' +
                           '<div class="span10">' +
                             moment(this.x).format("dddd, DD [de] MMMM [de] YYYY") + '<br/>'
 

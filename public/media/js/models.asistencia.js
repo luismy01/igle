@@ -1,5 +1,69 @@
 $(function () {
 
+	window.asistenciaChart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'lineChart',
+                type: 'line'
+            },
+            title: {
+                text: 'Asistencia a la Escuela Dominical'
+            },
+            subtitle: {
+                text: 'IPUC - Veinte de Julio'
+            },
+            xAxis: {
+                type: "datetime"
+            },
+            yAxis: {
+                title: {
+                    text: 'Asistencia'
+                }
+            },
+            tooltip: {
+                enabled: true,
+                useHTML: true,
+                formatter: function() {
+                    var txt = '<div class="container">' +
+                        '<div class="row">' +
+                          '<div class="span10">' +
+                            moment(this.x).format("dddd, DD [de] MMMM [de] YYYY") + '<br/>'
+
+                    var total = 0;
+                    $.each(this.points, function(i, point) {
+                        txt += '<br/> <b>' + point.series.name + '</b>: ' + point.y + ' personas'
+                        total += point.y
+                    });
+                    
+                    txt += '<br/><br/> <b>Total</b>: ' + total + ' personas'
+                        + '</div>' + '</div>';
+
+                    return txt;
+                },
+                shared: true
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                }
+            },
+            series: [{
+                name: 'Hermanos',
+                data: []
+            }, {
+                name: 'Visitas',
+                data: []
+            }, {
+                name: 'Ninos',
+                data: []
+            }, {
+                name: 'Adolescentes',
+                data: []
+            }]
+    });
+
 	window.Asistencia = Backbone.Model.extend({
 		defaults: {
 			fecha: '20130807',
@@ -28,10 +92,11 @@ $(function () {
 	});
 
 
-	window.ChartView = Backbone.View.extend({
+	window.AsistenciaChartView = Backbone.View.extend({
 
 		defaults: {
-			collection: new Backbone.Collection()
+			collection: new Backbone.Collection(),
+			chart: window.asistenciaChart
 		},
 
 		initialize: function(){
@@ -41,8 +106,6 @@ $(function () {
 		},
 
 		render: function() {
-
-			console.log("render chart")
 
 			var categories = new Array();
 			var data0 = new Array();
@@ -61,12 +124,14 @@ $(function () {
 
 			})
 
-			window.chart.xAxis[0].setCategories(categories);
+			asistenciaChart.xAxis[0].setCategories(categories);
 
-			window.chart.series[0].setData(data0);
-			window.chart.series[1].setData(data1);
-			window.chart.series[2].setData(data2);
-			window.chart.series[3].setData(data3);
+			asistenciaChart.series[0].setData(data0);
+			asistenciaChart.series[1].setData(data1);
+			asistenciaChart.series[2].setData(data2);
+			asistenciaChart.series[3].setData(data3);
+
+			return this;
 		},
 
 		reload: function() {
@@ -87,12 +152,13 @@ $(function () {
 	        this.collection.on("remove", this.render, this);
 	    },
 
-	    render: function () {
-	    	console.log("render list");
+	    render: function () {	    	
+	    	
 	    	$(this.el).html("");
 	        _.each(this.collection.models, function (asist) {
 	            $(this.el).append(new AsistenciaListItemView({model:asist}).render().el);
 	        }, this);
+	        
 	        return this;
 	    }
 
@@ -284,35 +350,6 @@ $(function () {
 	});
 
 
-	window.ToolBarView = Backbone.View.extend({
-		
-		el: $("body"),
-
-	    initialize:function () {
-	        this.render();
-	    },
-
-	    render:function (eventName) {
-	        return this;
-	    },
-
-	    events: {
-	        "click #add": "newAsistencia",
-	        "click #refresh": "listAsistencia"
-	    },
-
-	    newAsistencia:function (event) {
-	        app.navigate("add", true);
-	        return false;
-	    },
-
-	    listAsistencia: function(event) {
-	    	app.navigate("refresh", true);
-	        return false;	
-	    }
-
-	});
-
 	window.AppRouter = Backbone.Router.extend({
 
 	    routes: {
@@ -326,7 +363,6 @@ $(function () {
 	    },
 
 	    initialize: function () {
-	        var toolbarView = new ToolBarView();
 	        this.asistencias = new AsistenciaCollection()
 	    },
 
@@ -338,7 +374,7 @@ $(function () {
 	                self.listView = new AsistenciaListView({collection:self.asistencias});
 	                self.listView.render()
 	                
-					self.chartView = new ChartView({collection:self.asistencias});
+					self.chartView = new AsistenciaChartView({collection:self.asistencias, chart: window.asistenciaChart});
 	                self.chartView.render();
 
 	                if (evt) {
@@ -400,14 +436,16 @@ $(function () {
 
 	});
 
-	window.app = new AppRouter();
-	Backbone.history.start();
-
 	var oldFunction = Backbone.sync;
 	Backbone.sync = function (method, model, options) {
 		if (method == "update") method = "create";
 		return oldFunction(method, model, options);
 	};
 
+	/* idioma por defecto para moment */
+	moment.lang("es");
+
+	window.app = new AppRouter();
+	Backbone.history.start();
 
 });
