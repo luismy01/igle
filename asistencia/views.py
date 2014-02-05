@@ -5,11 +5,61 @@ from django.template import RequestContext
 from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.utils import simplejson
+import json
 
 from asistencia.models import asistencia
 
-def render(request, template):
-	return render_to_response(template, {}, context_instance=RequestContext(request))
+TEMPLATE_ASISTENCIA = "asistencia.html"
+TEMPLATE_LISTADO = "listado.html"
+TEMPLATE_GRAFICO = "grafico.html"
+
+def render(request, template, dictionary=None):
+	return render_to_response(template, dictionary, context_instance=RequestContext(request))
+
+def home(request):
+	
+	if request.is_ajax():
+		
+		# list all asistencias
+		if request.method == "GET":
+
+			return list(request)
+
+		# save a new asistencia
+		elif request.method == "POST":
+
+			return save(request)
+
+		else:
+
+			return render(request, TEMPLATE_GRAFICO)
+
+	else:
+		
+		return render(request, TEMPLATE_GRAFICO)
+
+def guardar(request):
+
+	if request.method == "POST":
+		
+		model = asistencia()
+		data = request.POST
+
+		model.id = data["id"]
+		model.fecha = data["fecha"]
+		model.hermanos = data["hermanos"]
+		model.visitas = data["visitas"]
+		model.ninos = data["ninos"]
+		model.adolescentes = data["adolescentes"]
+		model.ofrenda = data["ofrenda"]
+		model.observaciones = data["observaciones"]	
+		
+		print model
+
+		model.save();
+		return True
+
+	return False
 
 def agregar(request):
 
@@ -32,35 +82,57 @@ def agregar(request):
 	
 	return render(request, "asistencia/agregar.html")
 
-def editar(request):
-	
+def editar(request, id=0):
+
 	if request.method == "POST":
-		return redirect("/asistencia")
 
-	return redirect("/asistencia")
+		if guardar(request) == True:
+			return redirect("/asistencia/listar")
 
-def home(request):
-	
-	if request.is_ajax():
-		
-		# list all asistencias
-		if request.method == "GET":
+	elif request.method == "GET" and id != 0:
 
-			return list(request)
-
-		# save a new asistencia
-		elif request.method == "POST":
-
-			return save(request)
-
-		else:
-
-			return render(request, "asistencia/grafico.html")
-
+		item = asistencia.objects.get(id=id)
+		return render(request, TEMPLATE_ASISTENCIA, {
+			"asistencia": item,
+			"editar": True
+		})
 
 	else:
-		
-		return render(request, "asistencia/grafico.html")
+
+		return redirect("/asistencia/agregar")
+
+def borrar(request, id):
+	return redirect("/asistencia/listar")
+
+def listar(request):
+
+	page = 1
+	rows = 5
+
+	if 'page' in request.GET:
+		page = int(request.GET['page'])
+
+	if 'rows' in request.GET:
+		rows = int(request.GET["rows"])
+
+	ini = ((page-1) * rows)
+	fin = ini + rows
+
+	print ini, fin
+
+	if request.is_ajax():
+
+		registros = asistencia.objects.order_by('-fecha')[ini:fin]
+		json_list = [ r.dict() for r in registros ]
+
+		for i in range(len(json_list)):
+			json_list[i]['counter'] = ini + (i+1)
+
+		return HttpResponse(json.dumps({"data": json_list}), content_type='application/json')
+
+	return render(request, TEMPLATE_LISTADO, {
+		"asistencias": asistencia.objects.order_by('-fecha')[ini:fin]
+	})
 
 
 def manage(request, fecha):

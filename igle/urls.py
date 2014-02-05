@@ -7,7 +7,7 @@ from igle.views import home
 admin.autodiscover()
 
 urlpatterns = patterns('',
-	url(r'^$', home),
+	url(r'^$', home, name='inicio'),
 	url(r'^asistencia/', include('asistencia.urls')),
     url(r'^admin/', include(admin.site.urls)),
 

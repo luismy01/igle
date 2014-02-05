@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
 
 	{% block head %}{% endblock %}
@@ -36,6 +36,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Asistencia <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li class="menu-item"><a href="{% url agregar_asistencia %}">Agregar</a></li>
+							<li class="menu-item"><a href="{% url listar_asistencia %}">Listar</a></li>
 							<li class="menu-item"><a href="{% url grafico_asistencia %}">Gráfico</a></li>
 						</ul>
 					</li>
@@ -45,11 +46,10 @@
 
 					{% if user.username = "" %}
 					<li>
-						<a href="/entrar">Entrar</a>
+						<a href="{% url entrar %}">Entrar</a>
 					</li>
-					{% endif %}
-					
-					{% if user.username != "" %}
+
+					{% else %}
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }} <b class="caret"></b></a>
 						<ul class="dropdown-menu">
@@ -74,7 +74,7 @@
 	<section>
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 	<script src="http://code.highcharts.com/highcharts.js"></script>
 	<script src="http://jashkenas.github.io/underscore/underscore-min.js"></script>
 	<script src="http://jashkenas.github.io/backbone/backbone-min.js"></script>
@@ -86,6 +86,13 @@
     <script src="{{MEDIA_URL}}js/models.asistencia.js"></script>
     <script src="{{MEDIA_URL}}js/asistencia.js"></script>
   	
+	<script>
+		moment.lang('es', {
+        	months : "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split("_")
+        });
+	</script>
+	
+
 	{% block scriptlast %}{% endblock %}
 
   </body>

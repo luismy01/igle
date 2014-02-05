@@ -26,7 +26,7 @@ class asistencia(models.Model):
 			"ninos": self.ninos,
 			"adolescentes": self.adolescentes,
 			"ofrenda": self.ofrenda,
-			"observaciones": self.observaciones
+			"observaciones": str(self.observaciones)
 		}
 
 		return obj

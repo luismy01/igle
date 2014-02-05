@@ -1,0 +1,180 @@
+{% extends "web.html" %}
+
+{% block container %}
+	
+	<div class="row">
+		<div class="col-md-12">
+		
+			<table class="table table-hover table-condensed">
+				
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Fecha</th>
+						<th>Hermanos</th>
+						<th>Niños</th>
+						<th>Visitas</th>
+						<th>Adolescentes</th>
+						<th>Ofrenda</th>
+						<th>Descripción</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+
+				<tbody id="tbody">
+
+				{% for asistencia in asistencias %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td class="fecha">{{ asistencia.fecha|date:"Y-m-d" }}</td>
+						<td>{{ asistencia.hermanos }}</td>
+						<td>{{ asistencia.ninos }}</td>
+						<td>{{ asistencia.visitas }}</td>
+						<td>{{ asistencia.adolescentes }}</td>
+						<td>{{ asistencia.ofrenda }}</td>
+						<td>{{ asistencia.descripcion }}</td>
+						<td>
+							{% if user.username = "" %}
+							<a href="{% url entrar %}">Entrar</a>
+							{% else %}
+							<a href="{% url editar_asistencia asistencia.id %}" class="btn btn-primary btn-sm"><span title="Editar" class="glyphicon glyphicon-th-list"></span></a>
+							<a href="{% url borrar_asistencia asistencia.id %}" class="btn btn-danger btn-sm"><span title="Borrar" class="glyphicon glyphicon-trash"></span></a>
+							{% endif %}
+
+						</td>
+					</tr>
+				{% endfor %}
+
+				</tbody>
+
+			</table>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="text-center">
+			<ul class="pager">
+			  <li class="disabled"><a id="btn-prev" href="#" data-num="0">Anterior</a></li>
+			  <li><a id="btn-next" href="#" data-num="2">Siguiente</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-offset-5 col-md-2">
+			<select id="rows" class="form-control">
+				<option>5</option>
+				<option>10</option>
+				<option>15</option>
+				<option>20</option>
+				<option>25</option>
+				<option>30</option>
+				<option>35</option>
+				<option>40</option>
+				<option>45</option>
+				<option>50</option>
+			</select>
+		</div>
+	</div>
+
+	
+
+{% endblock %}
+
+{% block scriptlast %}
+
+<script type="text/x-mustache" id="template">
+	<tr>
+		<td><%= counter %></td>
+		<td class="fecha"><%= fecha %></td>
+		<td><%= hermanos %></td>
+		<td><%= ninos %></td>
+		<td><%= visitas %></td>
+		<td><%= adolescentes %></td>
+		<td><%= ofrenda %></td>
+		<td><%= observaciones %></td>
+		<td>
+			{% if user.username = "" %}
+			<a href="{% url entrar %}">Entrar</a>
+			{% else %}
+			<a href="{% url editar_asistencia 0 %}" class="btn btn-primary btn-sm"><span title="Editar" class="glyphicon glyphicon-th-list"></span></a>
+			<a href="{% url borrar_asistencia 0 %}" class="btn btn-danger btn-sm"><span title="Borrar" class="glyphicon glyphicon-trash"></span></a>
+			{% endif %}
+
+		</td>
+	</tr>
+</script>
+
+<script type="text/javascript">
+	
+	var $btnprev = $("#btn-prev");
+	var $btnnext = $("#btn-next");
+	var $rows = $("#rows");
+
+	var rows = $("#rows").val();
+
+	$("td.fecha").text(function (index, txtold){
+		var txt = moment(txtold).format("MMMM D, YYYY");
+		$(this).text(txt);
+	});
+
+	$rows.change( function (evt) {
+
+	});
+
+	$btnprev.click( function (evt) {
+		
+		evt.preventDefault();
+		if ($btnprev.parent().hasClass("disabled"))
+			return;
+
+		var num = parseInt($btnprev.data("num"));
+		$btnprev.data("num", (num-1));
+		$btnnext.data("num", (num+1));
+
+		if ((num-1) <= 0)
+			$btnprev.parent().addClass("disabled");
+
+		$.getJSON("{% url listar_asistencia %}"
+			, {"page": num, "rows": rows}
+			, actualizarListado
+		).always(function (res){});
+
+	});
+
+	$btnnext.click( function (evt) {
+		
+		evt.preventDefault();
+		if ($btnnext.parent().hasClass("disabled"))
+			return;
+
+		var num = parseInt($btnnext.data("num"));
+		$btnprev.data("num", (num-1));
+		$btnnext.data("num", (num+1));
+
+		if ((num-1) > 0)
+			$btnprev.parent().removeClass("disabled");
+
+		$.getJSON("{% url listar_asistencia %}"
+			, {"page": num, "rows": rows}
+			, actualizarListado
+		).always(function (res){});
+
+	});
+
+	function actualizarListado( json, textStatus, jqXHR ) {
+			
+		var template = $("#template").html();
+		var html = ""
+		_.each(json.data, function(json, key, list){
+			json.fecha = moment(json.fecha).format("MMMM D, YYYY");
+			html += _.template(template, json);
+		});
+
+		$("#tbody").html(html);
+
+	}
+
+</script>
+{% endblock %}
