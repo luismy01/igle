@@ -1,0 +1,126 @@
+{% extends "web.html" %}
+
+{% block container %}
+
+	<div class="row">
+		<div class="col-md-12">
+			
+
+			<form id="form-asist" class="form-horizontal" role="form" method="post"
+				action="{% if editar %} {% url editar_asistencia %} {% else %} {% url agregar_asistencia %} {% endif %}">
+				
+
+	    		<input type="hidden" class="form-control" id="id" name="id" value="{{ asistencia.id }}" />
+
+
+				<div class="form-group">
+			    	<label for="fecha" class="col-md-3 control-label">Fecha</label>
+			    	<div class="col-md-5">
+			    		<input type="date" class="form-control" id="fecha" name="fecha" placeholder="Enter email"
+			    			value="{{ asistencia.fecha|date:'Y-m-d' }}">
+			    	</div>
+			    </div>
+			    
+				<div class="form-group">
+					<label for="obs" class="col-md-3 control-label">Ofrenda</label>
+				    <div class="col-md-5">
+				    	<div class="input-group">
+							<span class="input-group-addon">$</span>
+							<input type="text" class="form-control numeric" id="ofrenda" name="ofrenda"
+								value="{{ asistencia.ofrenda }}">
+							<span class="input-group-addon">.00</span>
+						</div> 
+					</div> 
+				</div>
+			    
+			    <div class="form-group">
+			    	<label for="hermanos" class="col-md-3 control-label">Hermanos</label>
+			    	<div class="col-md-5">
+			    		<input type="number" class="form-control numeric" id="hermanos" name="hermanos" placeholder="Numero de Hermanos" value="{{ asistencia.hermanos }}">
+			    	</div>
+			    </div>
+
+			    <div class="form-group">
+			    	<label for="visitas" class="col-md-3 control-label">Visitas</label>
+			    	<div class="col-md-5">
+			      		<input type="number" class="form-control numeric" id="visitas" name="visitas" placeholder="Numero de Visitas" value="{{ asistencia.visitas }}">
+			      	</div>
+			    </div>
+
+			    <div class="form-group">
+			    	<label for="ninos" class="col-md-3 control-label">Ni&ntilde;os</label>
+			    	<div class="col-md-5">
+			    		<input type="number" class="form-control numeric" id="ninos" name="ninos" placeholder="Numero de Ni&ntilde;os" value="{{ asistencia.ninos }}">
+			    	</div>
+			    </div>
+
+			    <div class="form-group">
+			    	<label for="adolescentes" class="col-md-3 control-label">Adolescentes</label>
+			    	<div class="col-md-5">
+			    		<input type="number" class="form-control numeric" id="adolescentes" name="adolescentes" placeholder="Numero de Adolescentes" value="{{ asistencia.adolescentes }}">
+			    	</div>
+			    </div>
+
+			    <div class="form-group">
+			    	<label for="obs" class="col-md-3 control-label">Observaciones</label>
+			    	<div class="col-md-5">
+			    		<textarea class="form-control" rows="2" id="obs" name="observaciones" placeholder="¿Que sucedió?">
+			    		{{ asistencia.observaciones }}
+			    		</textarea>
+			    	</div>
+			    </div>
+
+			    <div class="form-group">
+			    	<div class="col-md-offset-3 col-md-5">
+						<button type="button" class="btn btn-primary" id="save">Guardar</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+		          </div>
+		        </div>
+
+			</form>
+		
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block scriptlast %}
+	<script type="text/javascript">
+
+		$save = $("#save");
+
+		$("#form-asist .numeric").keypress( function (evt) {
+			if (evt.which < 48 || evt.which > 57) evt.preventDefault();
+		});
+
+		$save.click( function (evt) {
+			$("#form-asist").submit();
+		});
+
+		$("#form-asist").validate({
+    
+        // Specify the validation rules
+        rules: {
+            hermanos: "required",
+            visitas: "required"
+        },
+        
+        // Specify the validation error messages
+        messages: {
+            hermanos: "Por favor digite el # de hermanos que asistieron",
+            visitas: "Por favor digite el # de visitas que asistieron"
+        },
+
+        errorElement: 'span',
+        errorClass: 'help-block',
+        
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
+
+
+
+
+	</script>
+{% endblock %}

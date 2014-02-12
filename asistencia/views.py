@@ -9,9 +9,9 @@ import json
 
 from asistencia.models import asistencia
 
-TEMPLATE_ASISTENCIA = "asistencia.html"
-TEMPLATE_LISTADO = "listado.html"
-TEMPLATE_GRAFICO = "grafico.html"
+TEMPLATE_ASISTENCIA = "asistencia/asistencia.html"
+TEMPLATE_LISTADO = "asistencia/listado.html"
+TEMPLATE_GRAFICO = "asistencia/grafico.html"
 
 def render(request, template, dictionary=None):
 	return render_to_response(template, dictionary, context_instance=RequestContext(request))
@@ -80,7 +80,7 @@ def agregar(request):
 	
 		return redirect("/asistencia")
 	
-	return render(request, "asistencia/agregar.html")
+	return render(request, TEMPLATE_ASISTENCIA)
 
 def editar(request, id=0):
 
