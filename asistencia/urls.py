@@ -10,6 +10,7 @@ urlpatterns = patterns('asistencia.views',
 	url(r'^grafico$', 'home', name="grafico_asistencia"),
 	url(r'^listar$', 'listar', name="listar_asistencia"),
 	url(r'^listado$', 'listar', name="listado_asistencia"),
+	url(r'^ajax$', 'ajax', name="asistencia_ajax"),
 	
     url(r'^(\d+)$', 'manageID', name="asistencia.manageID"),
     url(r'^(\d{4}-\d{2}-\d{2})$', 'manage', name="asistencia.manage"),

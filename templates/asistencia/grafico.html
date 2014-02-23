@@ -6,12 +6,101 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-body">			 
-					<div class="active" id="tb-grafico">
-						<div id="lineChart"></div>
+					
+					<div class="row">
+
+						<div class="col-md-1">
+							<button id="btn-prev" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span></button>
+						</div>
+						
+						<div class="col-md-10">
+							<div id="GraficoChartJS" style="max-width:100%;height: 400px;"></div>
+						</div>
+						
+						<div class="col-md-1">
+							<button id="btn-next" class="btn btn-default"><span class="glyphicon glyphicon-chevron-right"></span></button>
+						</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+{% endblock %}
+
+{% block scriptlast %}
+	
+	<script type="text/javascript">
+
+		var $GraficoChatJS = $("#GraficoChartJS");
+		var ini = 0, fin = 10, delta = 1;
+
+		$("#btn-prev").click( function (evt) {
+			solicitarDatos(-delta);
+		});
+
+		$("#btn-next").click( function (evt) {
+			solicitarDatos(delta);
+		});
+
+		$GraficoChatJS.dxChart({
+			
+			commonSeriesSettings: {
+				argumentField: 'fecha',
+		    }
+
+		    , legend: {
+		    	horizontalAlignment: 'center',
+		    	verticalAlignment: 'bottom'
+		    }
+
+		    , series: [{
+		    	name: 'Hermanos',            
+				valueField: 'hermanos'
+		    }, {
+				name: 'Visitas',
+				valueField: 'visitas'
+		    },{
+				name: 'Niños',
+				valueField: 'ninos'
+		    },{
+				name: 'Adolescentes',
+				valueField: 'adolescentes'
+		    }]
+
+		    , title: {
+		        text: 'Asistencia a la Escuela Dominical'
+		    }
+
+		    , tooltip: {
+		        enabled: true
+		    }
+
+		});
+
+		function DibujarGrafico (json) {
+
+			var chartDataSource = json.data
+
+			$GraficoChatJS.dxChart({
+				dataSource: chartDataSource
+			});
+
+		}
+
+		function solicitarDatos (dx) {
+
+			console.log(ini, fin, dx);
+
+			ini += dx;
+			fin += dx;
+
+			$.get("{% url asistencia_ajax %}", {"ini": ini, "fin": fin}, DibujarGrafico)	
+		}
+
+		solicitarDatos(0);
+		
+	</script>
 
 {% endblock %}

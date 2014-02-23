@@ -118,21 +118,47 @@ def listar(request):
 	ini = ((page-1) * rows)
 	fin = ini + rows
 
-	print ini, fin
+	registros = asistencia.objects.order_by('-fecha')[ini:fin]
 
 	if request.is_ajax():
 
-		registros = asistencia.objects.order_by('-fecha')[ini:fin]
 		json_list = [ r.dict() for r in registros ]
 
 		for i in range(len(json_list)):
 			json_list[i]['counter'] = ini + (i+1)
 
-		return HttpResponse(json.dumps({"data": json_list}), content_type='application/json')
+		return HttpResponse(json.dumps({"data": json_list}), content_type = 'application/json')
 
 	return render(request, TEMPLATE_LISTADO, {
-		"asistencias": asistencia.objects.order_by('-fecha')[ini:fin]
+		"asistencias": registros
 	})
+
+def ajax(request):
+	
+	ini = 0
+	fin = 10
+
+	if 'ini' in request.GET:
+		ini = int(request.GET["ini"])
+
+	if 'fin' in request.GET:
+		fin = int(request.GET["fin"])
+
+	registros = asistencia.objects.order_by('-fecha')[ini:fin]
+	json_list = [ r.dict() for r in registros ]
+
+	for i in range(len(json_list)):
+		json_list[i]['counter'] = ini + (i+1)
+
+	return HttpResponse(json.dumps({"data": json_list}), content_type = 'application/json')
+
+
+
+
+
+
+
+
 
 
 def manage(request, fecha):
@@ -185,7 +211,6 @@ def manageID(request, id):
 		
 		return render(request, "asistencia/grafico.html")
 
-
 def delete(request, fecha):
 	
 	model = asistencia()
@@ -204,21 +229,15 @@ def deleteID(request, id):
 
 	return HttpResponse(simplejson.dumps(model.dict()), mimetype='application/json')
 
-
-
 def select(request, fecha):
 	
 	model = asistencia.objects.get(fecha=fecha)
 	return HttpResponse(simplejson.dumps(model.dict()), mimetype='application/json')
 
-
-
 def selectID(request, id):
 
 	model = asistencia.objects.get(id=str(id))
 	return HttpResponse(simplejson.dumps(model.dict()), mimetype='application/json')
-
-
 
 def list(request):
 	
