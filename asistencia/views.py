@@ -5,13 +5,18 @@ from django.template import RequestContext
 from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.utils import simplejson
+from django.views.generic.detail import DetailView
 import json
 
-from asistencia.models import asistencia
+from asistencia.models import Asistencia
 
 TEMPLATE_ASISTENCIA = "asistencia/asistencia.html"
 TEMPLATE_LISTADO = "asistencia/listado.html"
 TEMPLATE_GRAFICO = "asistencia/grafico.html"
+
+
+class 
+
 
 def render(request, template, dictionary=None):
 	return render_to_response(template, dictionary, context_instance=RequestContext(request))
@@ -42,7 +47,7 @@ def guardar(request):
 
 	if request.method == "POST":
 		
-		model = asistencia()
+		model = Asistencia()
 		data = request.POST
 
 		model.id = data["id"]
@@ -65,7 +70,7 @@ def agregar(request):
 
 	if request.method == "POST":
 		
-		model = asistencia()
+		model = Asistencia()
 		data = request.POST
 
 		model.fecha = data["fecha"]
@@ -91,7 +96,7 @@ def editar(request, id=0):
 
 	elif request.method == "GET" and id != 0:
 
-		item = asistencia.objects.get(id=id)
+		item = Asistencia.objects.get(id=id)
 		return render(request, TEMPLATE_ASISTENCIA, {
 			"asistencia": item,
 			"editar": True
@@ -118,7 +123,7 @@ def listar(request):
 	ini = ((page-1) * rows)
 	fin = ini + rows
 
-	registros = asistencia.objects.order_by('-fecha')[ini:fin]
+	registros = Asistencia.objects.order_by('-fecha')[ini:fin]
 
 	if request.is_ajax():
 
@@ -144,7 +149,7 @@ def ajax(request):
 	if 'fin' in request.GET:
 		fin = int(request.GET["fin"])
 
-	registros = asistencia.objects.order_by('-fecha')[ini:fin]
+	registros = Asistencia.objects.order_by('-fecha')[ini:fin]
 	json_list = [ r.dict() for r in registros ]
 
 	for i in range(len(json_list)):
@@ -231,18 +236,18 @@ def deleteID(request, id):
 
 def select(request, fecha):
 	
-	model = asistencia.objects.get(fecha=fecha)
+	model = Asistencia.objects.get(fecha=fecha)
 	return HttpResponse(simplejson.dumps(model.dict()), mimetype='application/json')
 
 def selectID(request, id):
 
-	model = asistencia.objects.get(id=str(id))
+	model = Asistencia.objects.get(id=str(id))
 	return HttpResponse(simplejson.dumps(model.dict()), mimetype='application/json')
 
 def list(request):
 	
 	models = []
-	for model in asistencia.objects.all().order_by("fecha"):
+	for model in Asistencia.objects.all().order_by("fecha"):
 		models.append(model.dict())
 
 	return HttpResponse(simplejson.dumps(models), mimetype='application/json')

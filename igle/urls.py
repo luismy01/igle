@@ -15,6 +15,10 @@ urlpatterns = patterns('',
     url(r'^salir', 'igle.views.salir', name='salir'),
 )
 
+urlpatterns += patterns('',
+    (r'^grappelli/', include('grappelli.urls')), # grappelli URLS
+)
+
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes':True}),

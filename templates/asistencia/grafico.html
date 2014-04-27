@@ -51,7 +51,17 @@
 		
 
 		
-		function clickedItemFirst (li) {}
+		function clickedItemFirst (li) {
+			var $li = $paginator.find("li.active");
+			var $liO = $li.prev();
+			var page = parseInt($liO.attr("data-n"))
+
+			$liO.addClass("active");
+			$li.removeClass("active");
+			
+			solicitarDatos(page);
+		}
+
 		function clickedItem (li) {
 
 			var $liOld = $paginator.find("li.active");
@@ -62,7 +72,21 @@
 			var page = parseInt(li.attr("data-n"))
 			solicitarDatos(page);
 		}
-		function clickedItemLast (li) {}
+
+		function clickedItemLast (li) {
+
+			var $li = $paginator.find("li.active");
+			var $liO = $li.next();
+
+			
+
+			var page = parseInt($liO.attr("data-n"))
+
+			$liO.addClass("active");
+			$li.removeClass("active");
+			
+			solicitarDatos(page);
+		}
 
 
 		$paginator.children("li").click ( function (e) {
@@ -80,14 +104,7 @@
 			
 			e.preventDefault();
 
-			var $li = $paginator.find("li.active");
-			var $liO = $li.prev();
-			var page = parseInt($liO.attr("data-n"))
-
-			$liO.addClass("active");
-			$li.removeClass("active");
 			
-			solicitarDatos(page);
 
 		});
 
@@ -180,7 +197,7 @@ var $li = $paginator.find("li.active");
 
 			console.log(ini, fin, page);
 
-			$.get("{% url asistencia_ajax %}", {"ini": ini, "fin": fin}, DibujarGrafico)	
+			$.get("{% url "asistencia_ajax" %}", {"ini": ini, "fin": fin}, DibujarGrafico)	
 		}
 
 		solicitarDatos(1);

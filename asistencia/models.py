@@ -1,20 +1,24 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.contrib import admin
 
-# Create your models here.
-
-class asistencia(models.Model):
-	
+class Asistencia(models.Model):
 	id = models.AutoField(primary_key=True)
 	fecha = models.DateField(unique=True)
-	hermanos = models.IntegerField()
-	visitas = models.IntegerField()
-	ninos = models.IntegerField()
-	adolescentes = models.IntegerField()
-	ofrenda = models.IntegerField()
+	hermanos = models.PositiveIntegerField()
+	visitas = models.PositiveIntegerField()
+	ninos = models.PositiveIntegerField()
+	adolescentes = models.PositiveIntegerField()
+	ofrenda = models.PositiveIntegerField()
 	observaciones = models.CharField(max_length=250)
+	#user = models.ForeignKey(User)
 
+	# Indica el total de la asistencia
+	def total(self):
+		return self.hermanos + self.visitas + self.ninos + self.adolescentes
+ 
 	def __unicode__(self):
-		return self.fecha
+		return self.fecha.strftime("%Y-%m-%d")
 
 	def dict(self):
 		
@@ -35,3 +39,4 @@ class asistencia(models.Model):
 		db_table = "asistencia"
         verbose_name = "asistencia"
         verbose_name_plural = "asistencias"
+
