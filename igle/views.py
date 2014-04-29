@@ -6,7 +6,7 @@ def render(request, template):
     return render_to_response(template, context_instance=RequestContext(request))
 
 def home(request):
-	return redirect('/asistencia')
+    return redirect("/asistencia/")
 
 def entrar(request):
     

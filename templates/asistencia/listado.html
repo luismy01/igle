@@ -35,10 +35,10 @@
 						<td>{{ asistencia.descripcion }}</td>
 						<td>
 							{% if user.username = "" %}
-							<a href="{% url entrar %}">Entrar</a>
+							<a href="{% url 'entrar' %}">Entrar</a>
 							{% else %}
-							<a href="{% url editar_asistencia asistencia.id %}" class="btn btn-primary btn-sm"><span title="Editar" class="glyphicon glyphicon-th-list"></span></a>
-							<a href="{% url borrar_asistencia asistencia.id %}" class="btn btn-danger btn-sm"><span title="Borrar" class="glyphicon glyphicon-trash"></span></a>
+							<a href="{% url 'editar_asistencia' asistencia.id %}" class="btn btn-primary btn-sm"><span title="Editar" class="glyphicon glyphicon-th-list"></span></a>
+							<a href="{% url 'borrar_asistencia' asistencia.id %}" class="btn btn-danger btn-sm"><span title="Borrar" class="glyphicon glyphicon-trash"></span></a>
 							{% endif %}
 
 						</td>
@@ -96,10 +96,10 @@
 		<td><%= observaciones %></td>
 		<td>
 			{% if user.username = "" %}
-			<a href="{% url entrar %}">Entrar</a>
+			<a href="{% url 'entrar' %}">Entrar</a>
 			{% else %}
-			<a href="{% url editar_asistencia 0 %}" class="btn btn-primary btn-sm"><span title="Editar" class="glyphicon glyphicon-th-list"></span></a>
-			<a href="{% url borrar_asistencia 0 %}" class="btn btn-danger btn-sm"><span title="Borrar" class="glyphicon glyphicon-trash"></span></a>
+			<a href="{% url 'editar_asistencia' 0 %}" class="btn btn-primary btn-sm"><span title="Editar" class="glyphicon glyphicon-th-list"></span></a>
+			<a href="{% url 'borrar_asistencia' 0 %}" class="btn btn-danger btn-sm"><span title="Borrar" class="glyphicon glyphicon-trash"></span></a>
 			{% endif %}
 
 		</td>
@@ -136,7 +136,7 @@
 		if ((num-1) <= 0)
 			$btnprev.parent().addClass("disabled");
 
-		$.getJSON("{% url listar_asistencia %}"
+		$.getJSON("{% url 'listar_asistencia' %}"
 			, {"page": num, "rows": rows}
 			, actualizarListado
 		).always(function (res){});
@@ -156,7 +156,7 @@
 		if ((num-1) > 0)
 			$btnprev.parent().removeClass("disabled");
 
-		$.getJSON("{% url listar_asistencia %}"
+		$.getJSON("{% url 'listar_asistencia' %}"
 			, {"page": num, "rows": rows}
 			, actualizarListado
 		).always(function (res){});

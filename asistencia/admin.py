@@ -1,5 +1,8 @@
+
+from django.contrib import admin
+
 from igle.actions import export_as_xls
-from igle.models import Asistencia
+from asistencia.models import Asistencia
 
 ASISTENCIA_REFERENCIA = 100
 

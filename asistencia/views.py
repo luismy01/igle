@@ -15,9 +15,6 @@ TEMPLATE_LISTADO = "asistencia/listado.html"
 TEMPLATE_GRAFICO = "asistencia/grafico.html"
 
 
-class 
-
-
 def render(request, template, dictionary=None):
 	return render_to_response(template, dictionary, context_instance=RequestContext(request))
 
