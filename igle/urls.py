@@ -19,10 +19,6 @@ urlpatterns = patterns('',
     url(r'^importdata', 'importdata.views.import_view', name='importdata'),
 )
 
-urlpatterns += patterns('',
-    (r'^grappelli/', include('grappelli.urls')), # grappelli URLS
-)
-
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes':True}),
