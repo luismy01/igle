@@ -13,11 +13,12 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'igle_test',                      # Or path to database file if using sqlite3.
-        'USER': 'igle_test',                      # Not used with sqlite3.
-        'PASSWORD': 'test',                  # Not used with sqlite3.
+        'NAME': 'igle_produccion',                      # Or path to database file if using sqlite3.
+        'USER': 'igle',                      # Not used with sqlite3.
+        'PASSWORD': 'lm3&db#',                  # Not used with sqlite3.
         'HOST': 'postgresql1.alwaysdata.com',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+        'TEST_NAME': 'igle_test', # base de datos para pruebas unitarias con django
     }
 }
 
@@ -29,6 +30,8 @@ import os
 RUTA_PROYECTO = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 
+# Grappelli no esta soportado en alwaysdata ... por ahora
+# GRAPPELLI_ADMIN_TITLE = 'IPUC Veinte de Julio Cartagena'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -109,7 +112,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages"
+    "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.request",
 )
 
 MIDDLEWARE_CLASSES = (
@@ -135,6 +139,8 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    # Grappelli no esta soportado en alwaysdata ... por ahora
+    # 'grappelli',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -147,6 +153,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     #, 'tesoreria'
     'asistencia',
+    # 'mockups',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -177,3 +184,6 @@ LOGGING = {
         },
     }
 }
+
+
+GOOGLE_SECRET_CLIENT_ID = "notasecret"

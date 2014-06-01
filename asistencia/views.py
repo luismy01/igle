@@ -248,3 +248,10 @@ def list(request):
 		models.append(model.dict())
 
 	return HttpResponse(simplejson.dumps(models), mimetype='application/json')
+
+
+class AsistenciaView(DetailView):
+	model = Asistencia
+	context_object_name = "asistencia"
+	def get_template_names(self):
+		return TEMPLATE_ASISTENCIA
