@@ -1,7 +1,5 @@
 
 from django.contrib import admin
-
-from igle.actions import export_as_xls
 from asistencia.models import Asistencia
 
 ASISTENCIA_REFERENCIA = 100
@@ -11,7 +9,7 @@ class AsistenciaAdmin(admin.ModelAdmin):
 	list_filter = ('fecha',)
 	list_editable = ('ofrenda',)
 	search_fields = ('hermanos', 'observaciones')
-	actions = (export_as_xls, )
+	#actions = (export_as_xls, )
 
 	# Indica si la asistencia es alta, segun la ASISTENCIA_REFERENCIA
 	def esAlta(self, obj):
