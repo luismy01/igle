@@ -15,7 +15,6 @@ urlpatterns = patterns('',
     url(r'^entrar', 'igle.views.entrar', name='entrar'),
     url(r'^salir', 'igle.views.salir', name='salir'),
 
-
     # importdata
     url(r'^importdata', 'importdata.views.import_view', name='importdata'),
 )
