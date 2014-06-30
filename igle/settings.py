@@ -14,11 +14,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'igle_produccion',                      # Or path to database file if using sqlite3.
-        'USER': 'igle',                      # Not used with sqlite3.
-        'PASSWORD': 'lm3&db#',                  # Not used with sqlite3.
+        'USER': 'igle_test',                      # Not used with sqlite3.
+        #'PASSWORD': 'lm3&db#',                  # Not used with sqlite3.
+        'PASSWORD': 'test',                  # Not used with sqlite3.
         'HOST': 'postgresql1.alwaysdata.com',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
-        'TEST_NAME': 'igle_test', # base de datos para pruebas unitarias con django
+        #'TEST_NAME': 'igle_test', # base de datos para pruebas unitarias con django
     }
 }
 

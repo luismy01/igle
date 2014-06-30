@@ -17,7 +17,8 @@ class Asistencia(models.Model):
 		return self.hermanos + self.visitas + self.ninos + self.adolescentes
  
 	def __unicode__(self):
-		return self.fecha.strftime("%Y-%m-%d")
+		#return self.fecha.strftime("%Y-%m-%d")
+		return self.fecha.format("%Y-%m-%d")
 
 	def dict(self):
 		

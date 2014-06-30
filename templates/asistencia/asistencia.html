@@ -6,8 +6,12 @@
 		<div class="col-md-12">
 			
 
+<<<<<<< HEAD
+			<form id="form-asist" class="form-horizontal" role="form" method="post" action="{% if editar %} {% url 'editar_asistencia' id = asistencia.id %} {% else %} {% url 'agregar_asistencia' %} {% endif %}">
+=======
 			<form id="form-asist" class="form-horizontal" role="form" method="post"
 				action="{% if editar %} {% url 'editar_asistencia' id = asistencia.id %} {% else %} {% url 'agregar_asistencia' %} {% endif %}">
+>>>>>>> master
 				
 
 	    		<input type="hidden" class="form-control" id="id" name="id" value="{{ asistencia.id }}" />

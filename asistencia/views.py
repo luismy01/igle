@@ -63,7 +63,7 @@ def guardar(request):
 
 	return False
 
-def agregar(request):
+def agregar_view(request):
 
 	if request.method == "POST":
 		
@@ -84,7 +84,7 @@ def agregar(request):
 	
 	return render(request, TEMPLATE_ASISTENCIA)
 
-def editar(request, id=0):
+def editar_view(request, id=0):
 
 	if request.method == "POST":
 
@@ -103,7 +103,11 @@ def editar(request, id=0):
 
 		return redirect("/asistencia/agregar")
 
-def borrar(request, id):
+def borrar_view(request, id):
+
+	model = Asistencia()
+	model.id = id
+	model.delete()
 	return redirect("/asistencia/listar")
 
 def listar(request):

@@ -8,7 +8,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 	url(r'^$', home, name='inicio'),
-	url(r'^asistencia/', include('asistencia.urls')),
+	url(r'^ipuc/asistencia/', include('asistencia.urls')),
+    url(r'^asistencia/', include('asistencia.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^entrar', 'igle.views.entrar', name='entrar'),
