@@ -6,12 +6,7 @@
 		<div class="col-md-12">
 			
 
-			<form id="form-asist" class="form-horizontal" role="form" method="post"
-<<<<<<< HEAD
-				action="{% if editar %} {% url 'editar_asistencia' id=asistencia.id %} {% else %} {% url "agregar_asistencia" %} {% endif %}">
-=======
-				action="{% if editar %} {% url "editar_asistencia" %} {% else %} {% url "agregar_asistencia" %} {% endif %}">
->>>>>>> 0c4f97155eb30ac62f81de4eff16cad3abb71597
+			<form id="form-asist" class="form-horizontal" role="form" method="post" action="{% if editar %} {% url 'editar_asistencia' id = asistencia.id %} {% else %} {% url 'agregar_asistencia' %} {% endif %}">
 				
 
 	    		<input type="hidden" class="form-control" id="id" name="id" value="{{ asistencia.id }}" />
