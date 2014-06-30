@@ -6,9 +6,9 @@ from views import AsistenciaView
 urlpatterns = patterns('asistencia.views',
     
 	url(r'^$', 'home', name="home_asistencia"),
-	url(r'^agregar$', 'agregar', name="agregar_asistencia"),
-	url(r'^editar/(?P<id>\d+)$', 'editar', name="editar_asistencia"),
-	url(r'^borrar/(?P<id>\d+)$', 'borrar', name="borrar_asistencia"),
+	url(r'^agregar$', 'agregar_view', name="agregar_asistencia"),
+	url(r'^editar/(?P<id>\d+)$', 'editar_view', name="editar_asistencia"),
+	url(r'^borrar/(?P<id>\d+)$', 'borrar_view', name="borrar_asistencia"),
 	url(r'^grafico$', 'home', name="grafico_asistencia"),
 	url(r'^listar$', 'listar', name="listar_asistencia"),
 	url(r'^listado$', 'listar', name="listado_asistencia"),

@@ -7,7 +7,7 @@
 			
 
 			<form id="form-asist" class="form-horizontal" role="form" method="post"
-				action="{% if editar %} {% url "editar_asistencia" %} {% else %} {% url "agregar_asistencia" %} {% endif %}">
+				action="{% if editar %} {% url 'editar_asistencia' id=asistencia.id %} {% else %} {% url "agregar_asistencia" %} {% endif %}">
 				
 
 	    		<input type="hidden" class="form-control" id="id" name="id" value="{{ asistencia.id }}" />
