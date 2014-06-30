@@ -37,8 +37,8 @@
 							{% if user.username = "" %}
 							<a href="{% url 'entrar' %}">Entrar</a>
 							{% else %}
-							<a href="{% url 'editar_asistencia' id = asistencia.id %}" class="btn btn-primary btn-sm"><span title="Editar" class="glyphicon glyphicon-th-list"></span></a>
-							<a href="{% url 'borrar_asistencia' id = asistencia.id %}" class="btn btn-danger btn-sm"><span title="Borrar" class="glyphicon glyphicon-trash"></span></a>
+							<a href="{% url 'editar_asistencia' id=asistencia.id %}" class="btn btn-primary btn-sm"><span title="Editar" class="glyphicon glyphicon-th-list"></span></a>
+							<a href="{% url 'borrar_asistencia' id=asistencia.id %}" class="btn btn-danger btn-sm"><span title="Borrar" class="glyphicon glyphicon-trash"></span></a>
 							{% endif %}
 
 						</td>
@@ -98,8 +98,8 @@
 			{% if user.username = "" %}
 			<a href="{% url 'entrar' %}">Entrar</a>
 			{% else %}
-			<a href="{% url 'editar_asistencia' id = 0 %}" class="btn btn-primary btn-sm"><span title="Editar" class="glyphicon glyphicon-th-list"></span></a>
-			<a href="{% url 'borrar_asistencia' id = 0 %}" class="btn btn-danger btn-sm"><span title="Borrar" class="glyphicon glyphicon-trash"></span></a>
+			<a href="{% url 'editar_asistencia' id=0 %}" class="btn btn-primary btn-sm"><span title="Editar" class="glyphicon glyphicon-th-list"></span></a>
+			<a href="{% url 'borrar_asistencia' id=0 %}" class="btn btn-danger btn-sm"><span title="Borrar" class="glyphicon glyphicon-trash"></span></a>
 			{% endif %}
 
 		</td>
