@@ -113,7 +113,7 @@ def borrar_view(request, id):
 def listar(request):
 
 	page = 1
-	rows = 5
+	rows = 2048
 
 	if 'page' in request.GET:
 		page = int(request.GET['page'])
@@ -124,7 +124,8 @@ def listar(request):
 	ini = ((page-1) * rows)
 	fin = ini + rows
 
-	registros = Asistencia.objects.order_by('-fecha')[ini:fin]
+	#registros = Asistencia.objects.order_by('-fecha')[ini:fin]
+	registros = Asistencia.objects.order_by('-fecha')
 
 	if request.is_ajax():
 

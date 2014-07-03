@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-12">
 		
-			<table class="table table-hover table-condensed">
+			<table id="listado" class="table table-hover table-condensed">
 				
 				<thead>
 					<tr>
@@ -52,34 +52,6 @@
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="text-center">
-			<ul class="pager">
-			  <li class="disabled"><a id="btn-prev" href="#" data-num="0">Anterior</a></li>
-			  <li><a id="btn-next" href="#" data-num="2">Siguiente</a></li>
-			</ul>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-offset-5 col-md-2">
-			<select id="rows" class="form-control">
-				<option>5</option>
-				<option>10</option>
-				<option>15</option>
-				<option>20</option>
-				<option>25</option>
-				<option>30</option>
-				<option>35</option>
-				<option>40</option>
-				<option>45</option>
-				<option>50</option>
-			</select>
-		</div>
-	</div>
-
-	
-
 {% endblock %}
 
 {% block scriptlast %}
@@ -108,59 +80,9 @@
 
 <script type="text/javascript">
 	
-	var $btnprev = $("#btn-prev");
-	var $btnnext = $("#btn-next");
-	var $rows = $("#rows");
-
-	var rows = $("#rows").val();
-
 	$("td.fecha").text(function (index, txtold){
 		var txt = moment(txtold).format("MMMM D, YYYY");
 		$(this).text(txt);
-	});
-
-	$rows.change( function (evt) {
-
-	});
-
-	$btnprev.click( function (evt) {
-		
-		evt.preventDefault();
-		if ($btnprev.parent().hasClass("disabled"))
-			return;
-
-		var num = parseInt($btnprev.data("num"));
-		$btnprev.data("num", (num-1));
-		$btnnext.data("num", (num+1));
-
-		if ((num-1) <= 0)
-			$btnprev.parent().addClass("disabled");
-
-		$.getJSON("{% url 'listar_asistencia' %}"
-			, {"page": num, "rows": rows}
-			, actualizarListado
-		).always(function (res){});
-
-	});
-
-	$btnnext.click( function (evt) {
-		
-		evt.preventDefault();
-		if ($btnnext.parent().hasClass("disabled"))
-			return;
-
-		var num = parseInt($btnnext.data("num"));
-		$btnprev.data("num", (num-1));
-		$btnnext.data("num", (num+1));
-
-		if ((num-1) > 0)
-			$btnprev.parent().removeClass("disabled");
-
-		$.getJSON("{% url 'listar_asistencia' %}"
-			, {"page": num, "rows": rows}
-			, actualizarListado
-		).always(function (res){});
-
 	});
 
 	function actualizarListado( json, textStatus, jqXHR ) {
@@ -175,6 +97,12 @@
 		$("#tbody").html(html);
 
 	}
+
+	$("#listado").dataTable({
+		language:{
+			url: "//cdn.datatables.net/plug-ins/be7019ee387/i18n/Spanish.json"
+		}
+	});
 
 </script>
 {% endblock %}
