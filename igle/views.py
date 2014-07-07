@@ -1,22 +1,53 @@
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.views.generic import View
 
 def render(request, template):
     return render_to_response(template, context_instance=RequestContext(request))
 
-def home(request):
-    return redirect("/asistencia/")
 
-def entrar(request):
+class HomeView(View):
+    """
+    Esta es la vista de inicio del sitio web
+    """
+
+    def get(self, request, *args, **kwargs):
+        
+        if request.path == '/ipuc/':
+            return redirect("/ipuc/asistencia")
+        return redirect("/ipuc/")
+
+
+class LoginView(View):
+    """
+    Esta vista ejecuta la funcionalidad de inicio de sesion en el sitio web
+    """
+
+    def get(self, request, *args, **kwargs):
+        """
+        Metodo GET en el request
+        """
+
+        if request.user.is_authenticated():
+            return redirect('/')
+
+        message = "Please log in below..."
+        username = password = ''
+        return render_to_response('entrar.html', {'message':message, 'username': username})
+
+        
     
-    if request.user.is_authenticated():
-        return redirect('/')
+    def post(self, request, *args, **kwargs):
+        """
+        Metodo POST en el request
+        """
 
-    message = "Please log in below..."
-    username = password = ''
+        if request.user.is_authenticated():
+            return redirect('/')
 
-    if request.POST:
+        message = "Please log in below..."
+
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
@@ -30,8 +61,18 @@ def entrar(request):
         else:
             message = "Your username and/or password were incorrect."
 
-    return render_to_response('entrar.html', {'message':message, 'username': username})
+        return render_to_response('entrar.html', {'message':message, 'username': username})
 
-def salir(request):
-    logout(request)
-    return redirect('/')
+
+class LogoutView(View):
+    """
+    Esta vista ejecuta la funcionalidad de inicio de sesion en el sitio web
+    """
+
+    def get(self, request, *args, **kwargs):
+        """
+        Metodo GET en el request
+        """
+
+        logout(request)
+        return redirect('/')
