@@ -188,3 +188,6 @@ LOGGING = {
 
 
 GOOGLE_SECRET_CLIENT_ID = "notasecret"
+
+
+LOGIN_URL = "entrar"

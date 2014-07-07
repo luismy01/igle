@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url
+from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 
 from views import AsistenciaView
@@ -15,7 +16,7 @@ urlpatterns = patterns('asistencia.views',
 	url(r'^ajax$', 'ajax', name="asistencia_ajax"),
 	
 	# url para ver un registro de asistencia
-	url(r'^(?P<pk>[\d]+)$', AsistenciaView.as_view(), name="asistencia_view_id"),
+	url(r'^(?P<pk>[\d]+)$', login_required(AsistenciaView.as_view()), name="asistencia_view_id"),
 
     url(r'^(\d+)$', 'manageID', name="asistencia.manageID"),
     url(r'^(\d{4}-\d{2}-\d{2})$', 'manage', name="asistencia.manage"),

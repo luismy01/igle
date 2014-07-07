@@ -2,6 +2,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.utils import simplejson
@@ -63,6 +64,7 @@ def guardar(request):
 
 	return False
 
+@login_required
 def agregar_view(request):
 
 	if request.method == "POST":
@@ -84,6 +86,7 @@ def agregar_view(request):
 	
 	return render(request, TEMPLATE_ASISTENCIA)
 
+@login_required
 def editar_view(request, id=0):
 
 	if request.method == "POST":
@@ -103,6 +106,7 @@ def editar_view(request, id=0):
 
 		return redirect("/asistencia/agregar")
 
+@login_required
 def borrar_view(request, id):
 
 	model = Asistencia()

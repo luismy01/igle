@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
+from django.template import RequestContext
 from django.views.generic import View
 
-def render(request, template):
-    return render_to_response(template, context_instance=RequestContext(request))
+def render(request, template, dictionary={}):
+    return render_to_response(template, context_instance=RequestContext(request, dictionary))
 
 
 class HomeView(View):
@@ -34,7 +35,7 @@ class LoginView(View):
 
         message = "Please log in below..."
         username = password = ''
-        return render_to_response('entrar.html', {'message':message, 'username': username})
+        return render(request, 'entrar.html', {'message':message, 'username': username})
 
         
     
@@ -55,13 +56,16 @@ class LoginView(View):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                next = request.POST.get("next")
+                if next:
+                    return redirect(next)
                 return redirect('/')
             else:
                 message = "Your account is not active, please contact the site admin."
         else:
             message = "Your username and/or password were incorrect."
 
-        return render_to_response('entrar.html', {'message':message, 'username': username})
+        return render(request, 'entrar.html', {'message':message, 'username': username})
 
 
 class LogoutView(View):
