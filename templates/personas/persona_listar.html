@@ -1,0 +1,110 @@
+<script type="text/template" id="persona-list-template">
+
+    <div class="container-fluid">
+
+      <div class="row">
+
+        <div class="page-header">
+          
+          <div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
+
+            <div class="btn-group" role="group" aria-label="...">
+              <a class="btn btn-primary" href="#agregar">Crear</a>
+            </div>
+
+            <div class="btn-group" role="group" aria-label="...">
+              <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#filtros" aria-expanded="false" aria-controls="filtros">Filtrar</button>
+            </div>
+
+          </div>
+
+          <h1>Personas <small>(listado)</small></h1>
+
+        </div>
+
+      </div> <!-- .row -->
+
+      <div class="row">
+        <div class="panel panel-default collapse" id="filtros">
+          <div class="panel-heading">Filtros</div>
+          <div class="panel-body">
+            
+            <form>
+
+              <div class="col-md-3">
+                
+                <div class="form-group">
+                  <label class="control-label">Nombre</label>
+                  <input class="form-control input-sm nombre" value="" placeholder="Nombres y apellidos"/>
+                </div>
+
+              </div>
+            
+              <div class="col-md-3">
+
+                <div class="form-group">
+                  <label class="control-label">Correo electronico</label>
+                  <input class="form-control input-sm email" value="" placeholder="correo@dominio.co"/>
+                </div>
+
+              </div>
+              
+              <div class="col-md-3">
+
+                <div class="form-group">
+                  <label class="control-label">Congregacion</label>
+                  <input class="form-control input-sm congregacion" value="" placeholder=""/>
+                </div>
+                
+              </div>
+
+              <div class="col-md-3">
+
+                <div class="form-group">
+                  <label class="control-label">Genero</label>
+                  <div class="imput-group">
+
+                    <div class="btn-group genero" data-toggle="buttons">
+                      <label class="btn btn-default btn-sm active">
+                        <input type="radio" name="options" value="T" id="option1" autocomplete="off" checked> Sin filtrar
+                      </label>
+                      <label class="btn btn-default btn-sm">
+                        <input type="radio" name="options" value="M" id="option2" autocomplete="off"> Masculino
+                      </label>
+                      <label class="btn btn-default btn-sm">
+                        <input type="radio" name="options" value="F" id="option3" autocomplete="off"> Femenino
+                      </label>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      </div> <!-- .row -->
+
+      <div class="row" id="list-group">
+
+        <div class="list-group">
+
+          <% _.each(personas, function(persona) { %>
+
+          <a class="list-group-item <%= persona.get('habilitado') ? '' : 'list-group-item-warning' %>" href="#persona/<%= persona.get('identificacion_codigo') %>/ver">
+            <span class="badge"> <%= persona.get('genero') %> </span>
+            <h4 class="list-group-item-heading"><%= persona.get('nombre') %></h4>
+            <p class="list-group-item-text"><%= persona.get('congregacion') %></p>
+          </a>
+          
+          <% }); %>
+          
+        </div>
+
+      </div> <!-- .row -->
+
+    </div>
+
+</script>

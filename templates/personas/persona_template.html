@@ -1,0 +1,35 @@
+{% extends "igle/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %} Personas {% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div id="content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript Templates -->
+{% include "personas/persona_listar.html" %}
+{% include "personas/persona_editar.html" %}
+{% include "personas/persona_ver.html" %}
+  
+{% endblock %}
+
+{% block script %}
+
+    <script src="{% static "personas/js/persona.app.js" %}" type="text/javascript"></script>
+    <script src="{% static "personas/js/persona.model.js" %}" type="text/javascript"></script>
+    <script src="{% static "personas/js/persona.collection.js" %}" type="text/javascript"></script>
+    <script src="{% static "personas/js/persona.listview.js" %}" type="text/javascript"></script>
+    <script src="{% static "personas/js/persona.editview.js" %}" type="text/javascript"></script>
+    <script src="{% static "personas/js/persona.detailview.js" %}" type="text/javascript"></script>
+    <script src="{% static "personas/js/persona.router.js" %}" type="text/javascript"></script>
+    <script src="{% static "personas/js/persona.setup.js" %}" type="text/javascript"></script>
+
+{% endblock %}
