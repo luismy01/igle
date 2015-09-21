@@ -1,8 +1,12 @@
 from django.conf.urls import patterns, url
-from django.views.generic import TemplateView
-
-template = "personas/persona_template.html"
+from .views import PersonaCreateView, PersonaDetailView, PersonaEditView, PersonaListView
 
 urlpatterns = patterns('',
-    url(r'^$',  TemplateView.as_view(template_name = template), name="personas_view"),
+
+    url(r'^$',  PersonaListView.as_view(), name="home_view"),
+    url(r'^listar$',  PersonaListView.as_view(), name="list_view"),
+    url(r'^(?P<slug>(\w|\s)+)/ver$',  PersonaDetailView.as_view(), name="detail_view"),
+    url(r'^(?P<slug>\w+)/editar$',  PersonaEditView.as_view(), name="edit_view"),
+    url(r'^agregar$',  PersonaCreateView.as_view(), name="create_view"),
+    
 )

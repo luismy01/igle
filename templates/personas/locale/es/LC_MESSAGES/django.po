@@ -1,0 +1,36 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Luis Mejia <luismy01@gmail.com>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-10 22:11-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Translators: ejemplo de comentarios en las traducciones de los templates
+#: persona_listar.html:4
+msgid "Crear"
+msgstr "Crear"
+
+#: persona_listar.html:5
+msgid "Filtrar"
+msgstr "Filtrar"
+
+#: persona_listar.html:6
+msgid "listado"
+msgstr "listado"
+
+#: persona_listar.html:7 persona_template.html:6
+msgid "Personas"
+msgstr "Personas"

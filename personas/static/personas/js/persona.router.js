@@ -48,6 +48,8 @@ app.PersonaRouter = Backbone.Router.extend({
 	},
 
 	detalle: function(numero) {
+
+		var that = this;
 		var persona = app.personas.findWhere({identificacion_codigo: numero});
 
 		var view = new app.PersonaDetailView({
@@ -55,6 +57,10 @@ app.PersonaRouter = Backbone.Router.extend({
 			model: persona,
 			collection: app.personas,
 			router: app.router
+		});
+
+		view.on("delete", function(e){
+			that.navigate("listado", {trigger: true});
 		});
 
 		view.render();

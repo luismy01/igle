@@ -1,0 +1,128 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>El titulo</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "igle/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "igle/css/bootstrap-datetimepicker.min.css" %}">
+
+    {% block css %}{% endblock %}
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    {% block script-head %}{% endblock %}
+
+  </head>
+
+  <body>
+    
+    <div class="alert alert-info" role="alert">...</div>
+
+    <nav class="navbar navbar-default">
+      <div class="container">
+
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Sistema de informacion</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          
+          <!-- App Links -->
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="{% url 'home' %}"> Inicio <span class="sr-only">(current)</span></a></li>
+            <li class=""><a href="{% url 'personas:list_view' %}"> Personas <span class="sr-only">Módulo de personas</span></a></li>
+          </ul>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+    {% block body %}
+
+
+
+    <div class="container">
+
+      <br>
+
+      <div class="row">
+        <div class="col-lg-12">
+
+          <!-- Jumbotron -->
+          <div class="jumbotron">
+            <h1>Marketing stuff!</h1>
+            <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
+            <p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-lg-4">
+          <h2>Safari bug warning!</h2>
+          <p class="text-danger">As of v8.0, Safari exhibits a bug in which resizing your browser horizontally causes rendering errors in the justified nav that are cleared upon refreshing.</p>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-lg-4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+       </div>
+        <div class="col-lg-4">
+          <h2>Heading</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
+          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+        </div>
+      </div>
+
+      <!-- Site footer -->
+      <footer class="footer">
+        <p>&copy; Company 2014</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    {% endblock %}
+    
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script src="{% static "igle/js/lib/jquery.js" %}" type="text/javascript"></script>
+    <script src="{% static "igle/js/lib/underscore.js" %}" type="text/javascript"></script>
+    <script src="{% static "igle/js/lib/backbone.js" %}" type="text/javascript"></script>
+    <!--<script src="{% static "igle/js/lib/backbone.localstorage.js" %}" type="text/javascript"></script>-->  
+    <script src="{% static "igle/js/lib/moment.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "igle/js/lib/moment-locale-es.js" %}" type="text/javascript"></script>
+
+    <!-- Minified Bootstrap JavaScript -->
+    <script src="{% static "igle/js/lib/bootstrap.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "igle/js/lib/bootstrap-datetimepicker.min.js" %}" type="text/javascript"></script>
+    
+    {% block script-body %}{% endblock %}
+
+  </body>
+</html>

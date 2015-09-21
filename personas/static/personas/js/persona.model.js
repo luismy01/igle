@@ -1,4 +1,7 @@
 app.Persona = Backbone.Model.extend({
+	
+	urlRoot: "/personas/",
+
 	defaults: {
 		nombre: '',
 		identificacion_tipo: 'CC', // CC, TI, PS
@@ -12,7 +15,7 @@ app.Persona = Backbone.Model.extend({
 		habilitado: true, // true, false
 	},
 
-	localStorage: new Backbone.LocalStorage("personas"),
+	//localStorage: new Backbone.LocalStorage("personas"),
 
 	initialize: function() {
 		this.on("change", this.updateIdentificacion);

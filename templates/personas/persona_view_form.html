@@ -1,0 +1,85 @@
+{% extends "igle/base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block body %}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+
+			<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
+
+				<div class="btn-group" role="group" aria-label="...">
+					<button type="button" class="btn btn-danger btn-eliminar">Eliminar</button>
+				</div>
+
+				<div class="btn-group" role="group" aria-label="...">
+					<a href="{{ persona.get_edit_url }}" class="btn btn-default btn-editar">Editar</a>
+				</div>
+
+			</div>
+
+			<h1>Personas <small>(ver)</small></h1>
+
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12"></div>
+</div>
+
+<div class="row">
+
+	<div class="col-md-3">
+		<div href="#" class="thumbnail">
+			
+			<img alt="..." src="{% static "igle/img/profile/profile_twitter_naranja.png" %}">
+			
+			<div class="caption text-center">
+				<h2>{{ persona.nombre }}</h2>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="col-md-9">
+		<ul class="list-group">
+
+			<li class="list-group-item">
+				<h4 class="list-group-item-heading">Nombre</h4>
+				<p class="list-group-item-text nombre">{{ persona.nombre }}</p>
+			</li>
+
+			<li class="list-group-item">
+				<h4 class="list-group-item-heading identificacion_tipo">Cedúla de ciudadan&iacute;a</h4>
+				<p class="list-group-item-text identificacion_codigo">{{ persona.identificacion_codigo }}</p>
+			</li>
+
+			<li class="list-group-item">
+				<h4 class="list-group-item-heading">Congregaci&oacute;n</h4>
+				<p class="list-group-item-text congregacion">{{ persona.congregacion }}</p>
+			</li>
+
+			<li class="list-group-item">
+				<h4 class="list-group-item-heading">Fecha de nacimiento</h4>
+				<p class="list-group-item-text fecha_nacimiento">{{ persona.fecha_nacimiento }}</p>
+			</li>
+
+			<li class="list-group-item">
+				<h4 class="list-group-item-heading">Correo electr&oacute;nico</h4>
+				<p class="list-group-item-text email">{{ persona.email }}</p>
+			</li>
+
+			<li class="list-group-item">
+				<h4 class="list-group-item-heading">Celular de contacto</h4>
+				<p class="list-group-item-text celular">{{ persona.celular }}</p>
+			</li>
+
+		</ul>
+	</div>
+
+</div>
+
+{% endblock %}

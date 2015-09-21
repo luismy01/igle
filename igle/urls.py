@@ -2,6 +2,8 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
+from .views import MyTemplateView
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -12,9 +14,10 @@ urlpatterns = patterns('',
 
     url(r'^photo/(?P<identif>\d+)$', 'igle.views.photo', name='photo'),
 
-    url(r'^personas/', include('personas.urls')),
+    url(r'^personas/', include('personas.urls', namespace="personas", app_name="personas")),
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^secretaria/', include('secretary.urls')),
+    url(r'^template', MyTemplateView.as_view())
 )
 
 if settings.DEBUG:

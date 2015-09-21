@@ -1,3 +1,11 @@
+{% load i18n %}
+
+{# Translators: ejemplo de comentarios en las traducciones de los templates #}
+{% trans "Crear" as crear %}
+{% trans "Filtrar" as filtrar %}
+{% trans "listado" as listado %}
+{% trans "Personas" as personas %}
+
 <script type="text/template" id="persona-list-template">
 
     <div class="container-fluid">
@@ -9,16 +17,16 @@
           <div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
 
             <div class="btn-group" role="group" aria-label="...">
-              <a class="btn btn-primary" href="#agregar">Crear</a>
+              <a class="btn btn-primary" href="#agregar">{{crear}}</a>
             </div>
 
             <div class="btn-group" role="group" aria-label="...">
-              <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#filtros" aria-expanded="false" aria-controls="filtros">Filtrar</button>
+              <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#filtros" aria-expanded="false" aria-controls="filtros">{{filtrar}}</button>
             </div>
 
           </div>
 
-          <h1>Personas <small>(listado)</small></h1>
+          <h1>{{personas}} <small>({{listado}})</small></h1>
 
         </div>
 

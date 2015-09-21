@@ -1,0 +1,120 @@
+{% extends "igle/base.html" %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div id="content"></div>
+  </div>
+</div>
+
+{% endblock %}
+
+<script type="text/template" id="persona-edit-template">
+    
+    <div class="row">
+
+      <div class="page-header">
+        <h1>Personas <small>(editar)</small></h1>
+      </div>
+
+      <div class="col-md-2">
+        <div href="#" class="thumbnail">
+          <img alt="..." src="{% static "igle/img/profile/profile_twitter_naranja.png" %} ">
+          <div class="caption text-center">
+            <h2 class="nickname"><%= nombre.split(" ")[0] %></h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-10">
+        <div class="well">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-md-3">Nombre</label>
+              <div class="col-md-9">
+                <input class="form-control nombre" value="<%= nombre %>" placeholder="nombres y apellidos"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">Tipo de identificaci&oacute;n</label>
+              <div class="col-md-9">
+
+                <div class="input-group">
+                  <span class="input-group-btn" id="TipoIdentificacion">
+                    <button type="button" class="btn btn-default identificacion_descripcion" data-tipo="<%= identificacion_tipo %>"><%= identificacion_descripcion %></button>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li class="dropdown-header">Documentos Nacionales</li>
+                      <li><a data-tipo="CC">C&eacute;dula de ciudadan&iacute;a</a></li>
+                      <li><a data-tipo="TI">Tarjeta de identidad</a></li>
+                      <li class="dropdown-header">Documentos Internacionales</li>
+                      <li><a data-tipo="PS">Pasaporte</a></li>
+                    </ul>
+                  </span>
+                  <input class="form-control identificacion_codigo" value="<%= identificacion_codigo %>"/>
+                </div>
+
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">Congregacion</label>
+              <div class="col-md-9">
+                <input class="form-control congregacion" value="<%= congregacion %>"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">Fecha de nacimiento</label>
+              <div class="col-md-9">
+                <div class="input-group">
+                  <div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
+                  <input class="form-control fecha_nacimiento" value="<%= fecha_nacimiento %>"/>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">Correo electronico</label>
+              <div class="col-md-9">
+                <input class="form-control email" value="<%= email %>" placeholder="correo@dominio.co"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">Celular de contacto</label>
+              <div class="col-md-9">
+                <input class="form-control celular" value="<%= celular %>"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">Genero</label>
+              <div class="col-md-9">
+
+                <div class="btn-group" data-toggle="buttons">
+                  <label class="btn btn-default <%= (genero === 'M') ? 'active' : '' %>">
+                    <input type="radio" name="options" value="M" id="option1" autocomplete="off" <%= (genero === 'M') ? 'checked' : '' %>> Masculino
+                  </label>
+                  <label class="btn btn-default <%= (genero === 'F') ? 'active' : '' %>">
+                    <input type="radio" name="options" value="F" id="option2" autocomplete="off" <%= (genero === 'F') ? 'checked' : '' %>> Femenino
+                  </label>
+                </div>
+
+                <div class="btn-group pull-right" data-toggle="buttons">
+                  <label class="btn btn-primary <%= !habilitado ? 'active' : '' %> chk-habilitar">
+                    <input type="checkbox" autocomplete="off" <%= !habilitado ? 'checked' : '' %>>
+                    <%= habilitado ? 'Deshabilitar' : 'Deshabilitado' %>
+                  </label>
+                </div>
+
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-9">
+                <button class="btn btn-primary btn-guardar">Guardar</button>
+                <a class="btn btn-default btn-cancelar" onClick="history.go(-1); return false;">Cancelar</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+</script>

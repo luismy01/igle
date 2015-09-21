@@ -12,6 +12,7 @@ app.PersonaDetailView = Backbone.View.extend({
 		this.$el.html( html );
 
 		this.$habilitar = this.$(".btn-habilitar");
+        this.$dialog = this.$("#dialogo-eliminar");
 
 		return this;
 	},
@@ -20,6 +21,7 @@ app.PersonaDetailView = Backbone.View.extend({
 		"click .btn-editar": "editar",
 		"click .btn-habilitar": "habilitar",
 		"click .btn-eliminar": "onEliminar",
+        "click .btn-eliminar-ok": "eliminar",
 	},
 
     habilitar: function(evt) {
@@ -43,16 +45,23 @@ app.PersonaDetailView = Backbone.View.extend({
     	
     	var compile = _.template( $("#dialogo-eliminar-template").html() );
     	var html = compile( {persona: this.model} );
-    	var $dialog = this.$("#dialogo-eliminar");
 
-    	$dialog.html( html );
-    	$dialog.modal( "show" );
+    	this.$dialog.html( html );
+    	this.$dialog.modal( "show" );
 
     },
 
     eliminar: function (evt) {
 
-    	alert("eliminar");
+        var that = this;
+
+        this.model.destroy({wait:true});
+
+        this.$dialog.on("hidden.bs.modal", function(evt){
+            that.trigger("delete");
+        });
+
+        this.$dialog.modal( "hide" );
 
     }
 

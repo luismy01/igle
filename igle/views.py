@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.views.generic import TemplateView
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -63,3 +64,16 @@ def photo(request, identif):
 	response = HttpResponse("", content_type="image/jpeg")
 	response.write(f.read())	
 	return response
+
+
+class MyTemplateView(TemplateView):
+	
+	template_name = "igle/template.html"
+
+	def get_template_names(self):
+
+		if "q" not in self.request.GET:
+			return super(MyTemplateView, self).get_template_names()
+
+		return self.request.GET.get("q")
+
