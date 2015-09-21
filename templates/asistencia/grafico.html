@@ -1,0 +1,207 @@
+{% extends "web.html" %}
+
+{% block container %}
+	
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-body">			 
+					
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+							<div id="GraficoChartJS" style="max-width:100%;height: 400px;"></div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							
+							<div class="text-center">
+								<ul id="paginator" class="pagination">
+									<li class="first disabled"><a href="#">&laquo;</a></li>
+									<li data-n="1" class="active"><a href="#">1</a></li>
+									<li data-n="2"><a href="#">2</a></li>
+									<li data-n="3"><a href="#">3</a></li>
+									<li data-n="4"><a href="#">4</a></li>
+									<li data-n="5"><a href="#">5</a></li>
+									<li class="last"><a href="#">&raquo;</a></li>
+								</ul>
+							</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block scriptlast %}
+	
+	<script type="text/javascript">
+
+		var $GraficoChatJS = $("#GraficoChartJS");
+		var $paginator = $("#paginator");
+		var $liFirst = $paginator.find("li.first").first();
+		var $lilast = $paginator.find("li.last").first();
+
+		var rowsInPage = 5, pageNow = 0;
+		var ini = 0, fin = 10, delta = 1;
+		
+
+		
+		function clickedItemFirst (li) {
+			var $li = $paginator.find("li.active");
+			var $liO = $li.prev();
+			var page = parseInt($liO.attr("data-n"))
+
+			$liO.addClass("active");
+			$li.removeClass("active");
+			
+			solicitarDatos(page);
+		}
+
+		function clickedItem (li) {
+
+			var $liOld = $paginator.find("li.active");
+
+			li.addClass("active");
+			$liOld.removeClass("active");
+			
+			var page = parseInt(li.attr("data-n"))
+			solicitarDatos(page);
+		}
+
+		function clickedItemLast (li) {
+
+			var $li = $paginator.find("li.active");
+			var $liO = $li.next();
+
+			
+
+			var page = parseInt($liO.attr("data-n"))
+
+			$liO.addClass("active");
+			$li.removeClass("active");
+			
+			solicitarDatos(page);
+		}
+
+
+		$paginator.children("li").click ( function (e) {
+			
+			e.preventDefault();
+			var $li = $(this);
+
+			if ($li.hasClass("first")) clickedItemFirst($li);
+			if ($li.hasClass("last")) clickedItemLast($li);
+			else clickedItem($li);
+
+		});
+
+		$liFirst.click ( function (e) {
+			
+			e.preventDefault();
+
+			
+
+		});
+
+		$lilast.click ( function (e) {
+
+			e.preventDefault();
+
+			var $li = $paginator.find("li.active");
+			var $liO = $li.next();
+			var page = parseInt($liO.attr("data-n"))
+
+			$liO.addClass("active");
+			$li.removeClass("active");
+			
+			solicitarDatos(page);
+
+		});
+/*
+		$("#btn-prev").click( function (evt) {
+			solicitarDatos(-delta);
+
+var $li = $paginator.find("li.active");
+			var $liOther;
+			
+			if (page > pageNow) $liOther = $li.next();
+			else $liOther = $li.prev();
+
+			if ($paginator.first("li") === $liOther || $paginator.last("li") === $liOther) {
+				$liOther.addClass("disabled");
+			} else {
+				$li.toggleClass("active");
+				$liOther.toggleClass("active");
+			}
+
+		});
+
+		$("#btn-next").click( function (evt) {
+			solicitarDatos(delta);
+		});
+*/
+		$GraficoChatJS.dxChart({
+			
+			commonSeriesSettings: {
+				argumentField: 'fecha',
+		    }
+
+		    , legend: {
+		    	horizontalAlignment: 'center',
+		    	verticalAlignment: 'bottom'
+		    }
+
+		    , series: [{
+		    	name: 'Hermanos',            
+				valueField: 'hermanos'
+		    }, {
+				name: 'Visitas',
+				valueField: 'visitas'
+		    },{
+				name: 'Niños',
+				valueField: 'ninos'
+		    },{
+				name: 'Adolescentes',
+				valueField: 'adolescentes'
+		    }]
+
+		    , title: {
+		        text: 'Asistencia a la Escuela Dominical'
+		    }
+
+		    , tooltip: {
+		        enabled: true
+		    }
+
+		});
+
+		function DibujarGrafico (json) {
+
+			var chartDataSource = json.data
+
+			$GraficoChatJS.dxChart({
+				dataSource: chartDataSource
+			});
+
+		}
+
+		function solicitarDatos (page) {
+
+			fin = page * rowsInPage;
+			ini = fin - rowsInPage;
+
+			console.log(ini, fin, page);
+
+			$.get("{% url "asistencia_ajax" %}", {"ini": ini, "fin": fin}, DibujarGrafico)	
+		}
+
+		solicitarDatos(1);
+		
+	</script>
+
+{% endblock %}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <title>Iglesoft | asistencia</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+	<link rel="stylesheet" href="//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.css">
+
+	{% block head %}{% endblock %}
+
+  </head>
+
+  <body>
+
+	<header>
+
+		<nav class="navbar navbar-default" role="navigation">
+						
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Veinte de Julio</a>
+			</div>
+
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+
+				<ul class="nav navbar-nav">
+					<li><a href="/">Inicio</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Asistencia <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li class="menu-item"><a href="{% url 'agregar_asistencia' %}">Agregar</a></li>
+							<li class="menu-item"><a href="{% url 'listar_asistencia' %}">Listar</a></li>
+							<li class="menu-item"><a href="{% url 'grafico_asistencia' %}">Gráfico</a></li>
+						</ul>
+					</li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+
+					{% if user.username = "" %}
+					<li>
+						<a href="{% url 'entrar' %}">Entrar</a>
+					</li>
+
+					{% else %}
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }} <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Cambia la contraseña</a></li>
+							<li class="divider"></li>
+							<li><a href="{% url "salir" %}">Salir</a></li>
+						</ul>
+					</li>
+					{% endif %}
+
+				</ul>
+
+			</div><!-- /.navbar-collapse -->
+		</nav>
+
+	</header>
+
+	<section>
+
+		<div class="container">
+			
+			{% if messages %}
+			<div class="alert alert-info alert-dismissable">
+			    {% for message in messages %}
+			    	<strong> {{ message }} </strong>
+			    {% endfor %}
+			</div>
+			{% endif %}
+
+			{% block container %}{% endblock %}
+
+		</div>
+
+	<section>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
+	<script src="https://rawgithub.com/moment/moment/2.1.0/min/moment.min.js"></script>
+	<script src="https://rawgithub.com/moment/moment/2.1.0/min/langs.min.js"></script>
+	<script src="//ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
+	<script src="//cdn3.devexpress.com/jslib/13.2.7/js/dx.chartjs.js"></script>
+
+	<script src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+	<script src="//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+	<!-- <script src="https://rawgithub.com/timrwood/moment-timezone/0.0.1/min/moment-timezone.min.js"></script> -->
+
+    <!-- <script src="{{MEDIA_URL}}js/chart.js"></script> -->
+    <!-- <script src="{{MEDIA_URL}}js/models.asistencia.js"></script> -->
+    <script src="{{MEDIA_URL}}js/asistencia.js"></script>
+  	
+	<script>
+		moment.lang('es', {
+        	months : "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split("_")
+        });
+	</script>
+	
+
+	{% block scriptlast %}{% endblock %}
+
+  </body>
+
+</html>
