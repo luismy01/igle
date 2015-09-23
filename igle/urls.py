@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^personas/', include('personas.urls', namespace="personas", app_name="personas")),
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^secretaria/', include('secretary.urls')),
-    url(r'^template', MyTemplateView.as_view())
+    url(r'^template', MyTemplateView.as_view()),
     url(r'^admin/', include(admin.site.urls)),
 
 )
