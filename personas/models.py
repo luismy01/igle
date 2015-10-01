@@ -32,7 +32,7 @@ class Persona(models.Model):
 		return self.nombre
 
 	def get_absolute_url(self):
-		return reverse('personas:detail_view', kwargs={"slug": self.identificacion_codigo})
+		return reverse('personas:detail_view', kwargs={"slug": self.id})
 
 	def get_edit_url(self):
-		return reverse('personas:edit_view', kwargs={"slug": self.identificacion_codigo})
+		return reverse('personas:edit_view', kwargs={"slug": self.id})
