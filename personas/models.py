@@ -17,7 +17,7 @@ class Persona(models.Model):
 	)
 
 	nombre = models.CharField(max_length=50)
-	identificacion_tipo = models.CharField(max_length=3, choices=GENERO_CHOICES, default="CC")
+	identificacion_tipo = models.CharField(max_length=3, choices=IDENTIFICACION_TIPO_CHOICES, default="CC")
 	# identificacion_descripcion. Utilizado en Javascript
 	identificacion_codigo = models.CharField(max_length=30, db_index=True)
 	congregacion = models.CharField(max_length=50)

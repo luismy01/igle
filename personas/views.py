@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse_lazy
 from django.forms.models import model_to_dict
 from django.http import HttpResponse, JsonResponse
-from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView, View
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView, View
 from django.views.generic.list import MultipleObjectMixin
 from .forms import PersonaForm
 from .models import Persona
@@ -13,7 +13,7 @@ class PersonaListView(JSONResponseMixin, ListView):
 	
 	context_object_name = "personas"
 	model = Persona
-	paginate_by = 2
+	paginate_by = 12
 	template_name = "personas/list.html"
 
 
@@ -100,7 +100,7 @@ class PersonaEditView(UpdateView):
 	model = Persona
 	queryset = Persona.objects.all()
 	template_name = "personas/persona_edit_form.html"
-	slug_field = "identificacion_codigo"
+	slug_field = "id"
 
 	def get(self, request, *args, **kwargs):
 
@@ -114,7 +114,7 @@ class PersonaDetailView(DetailView):
 	context_object_name = "persona"
 	queryset = Persona.objects.all()
 	template_name = "personas/persona_view_form.html"
-	slug_field = "identificacion_codigo"
+	slug_field = "id"
 
 	def get(self, request, *args, **kwargs):
 
@@ -126,14 +126,55 @@ class PersonaDetailView(DetailView):
 
 class PersonaCreateView(CreateView):
 
+	context_object_name = "persona"
 	form_class = PersonaForm
+	queryset = Persona.objects.all()
 	template_name = "personas/persona_create_form.html"
 	success_url = reverse_lazy('personas:list_view')
 
 	def get(self, request, *args, **kwargs):
-		print "PersonaCreateView: get method"
 		return super(PersonaCreateView, self).get(request, *args, **kwargs)
 
 	def post(self, request, *args, **kwargs):
-		print "PersonaCreateView: post method"
 		return super(PersonaCreateView, self).post(request, *args, **kwargs)
+    
+	def form_invalid(self, form):
+		print "el formulaio no es valido"
+		print form.errors
+		return super(PersonaCreateView, self).form_invalid(form)
+	
+	def get_context_data(self, **kwargs):
+
+		context_data = super(PersonaCreateView, self).get_context_data(**kwargs)
+		form = context_data['form']
+		
+		persona = None
+		
+		if self.context_object_name in context_data:	
+			persona = context_data[self.context_object_name]
+		
+		if persona is None:
+			persona = Persona()
+			persona.nombre = form['nombre'].value() if form['nombre'].value() is not None else persona.nombre
+			persona.identificacion_codigo = form['identificacion_codigo'].value() if form['identificacion_codigo'].value() is not None else persona.identificacion_codigo
+			persona.congregacion = form['congregacion'].value() if form['congregacion'].value() is not None else persona.congregacion
+			persona.fecha_nacimiento = form['fecha_nacimiento'].value() if form['fecha_nacimiento'].value() is not None else persona.fecha_nacimiento
+			persona.email = form['email'].value() if form['email'].value() is not None else persona.email
+			persona.celular = form['celular'].value() if form['celular'].value() is not None else persona.celular
+
+			context_data[self.context_object_name] = persona
+		
+		print form['fecha_nacimiento'].value()
+		
+		return context_data
+	
+
+class PersonaDeleteView(DeleteView):
+	
+	model = Persona
+	queryset = Persona.objects.all()
+	slug_field = "id"
+	success_url = reverse_lazy('personas:list_view')
+	
+	def get(self, request, *args, **kwargs):
+		return self.post(request, *args, **kwargs)
