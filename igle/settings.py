@@ -17,9 +17,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'iglesia.db',                      # Or path to database file if using sqlite3.
-        'USER': 'iglesia',                      # Not used with sqlite3.
-        'PASSWORD': 'iglesia',                  # Not used with sqlite3.
+        'NAME': 'igle_development',
+	'USER': 'igle_test',
+        'PASSWORD': 'igle_test',
         'HOST': 'postgresql1.alwaysdata.com', # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
     }
@@ -146,7 +146,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     #'tesoreria',
-    'secretary',
+    #'secretary',
     'personas',
 )
 
