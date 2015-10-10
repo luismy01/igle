@@ -8,7 +8,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 import os.path
 
-from secretary.models import Miembro
+#from secretary.models import Miembro
 
 @login_required(login_url=settings.LOGIN_URL)
 def home(request):
@@ -46,7 +46,7 @@ def userlogout(request):
 
 @login_required(login_url=settings.LOGIN_URL)
 def photo(request, identif):
-	
+	"""	
 	try:	
 	
 		member = Miembro.objects.get(identificacion=identif)
@@ -62,7 +62,8 @@ def photo(request, identif):
 	
 	response = HttpResponse("", content_type="image/jpeg")
 	response.write(f.read())	
-	return response
+	return response"""
+	pass
 
 
 class MyTemplateView(TemplateView):

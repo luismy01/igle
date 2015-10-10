@@ -11,7 +11,7 @@ urlpatterns = patterns('',
 					   url(r'^$', 'igle.views.home', name='home'),
 					   url(r'^login/$', 'igle.views.userlogin', name='login'),
 					   url(r'^logout/$', 'igle.views.userlogout', name='logout'),
-					   url(r'^photo/(?P<identif>\d+)$', 'igle.views.photo', name='photo'),
+					   #url(r'^photo/(?P<identif>\d+)$', 'igle.views.photo', name='photo'),
 					   url(r'^form/$', MyFormView.as_view(), name='myformview'),
 					   
 					   url(r'^personas/', include('personas.urls', namespace="personas", app_name="personas")),
